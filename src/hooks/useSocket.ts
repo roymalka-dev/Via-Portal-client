@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
 
 interface UseSocketOptions {
@@ -36,5 +36,12 @@ export const useSocket = (url: string, options?: UseSocketOptions) => {
     return () => socket?.off(event, func);
   };
 
-  return { socket, emit, on };
+  const off = useCallback(
+    (event: string, func: (...args: any[]) => void) => {
+      socket?.off(event, func);
+    },
+    [socket]
+  );
+
+  return { socket, emit, on, off };
 };

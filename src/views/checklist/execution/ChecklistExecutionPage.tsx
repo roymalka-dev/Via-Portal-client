@@ -36,7 +36,7 @@ const ChecklistExecutionPage = () => {
     }
   }, [data, error, status]);
 
-  const { emit, on } = useSocket(appConfig.apiBaseUrl, {
+  const { emit, on, off } = useSocket(appConfig.apiBaseUrl, {
     id: execId,
     autoConnect: true,
     reconnectionAttempts: 5,
@@ -126,6 +126,11 @@ const ChecklistExecutionPage = () => {
 
     on("cardLocationChange", handleCardLocationChange);
     on("cardAssigneeChange", handleCardAssigneeChange);
+
+    return () => {
+      off("cardLocationChange", handleCardLocationChange);
+      off("cardAssigneeChange", handleCardAssigneeChange);
+    };
   }, [on]);
 
   const filters = assigneeOptions.map((assignee) => ({
