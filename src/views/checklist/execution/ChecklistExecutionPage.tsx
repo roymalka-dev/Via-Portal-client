@@ -133,8 +133,6 @@ const ChecklistExecutionPage = () => {
     value: assignee,
   }));
 
-  console.log("mount"); // This should only log once when the component mounts
-
   return (
     <Box>
       <KanbanBoard
