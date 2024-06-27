@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import {
   Avatar,
@@ -12,7 +13,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { IKanbanFilterOption } from "@/types/components.types/kanban.types";
 
 interface FilterToolbarProps {
-  filters: IKanbanFilterOption[];
+  filters: IKanbanFilterOption[] | any;
   onFilterChange: (filters: string[]) => void;
 }
 
@@ -45,7 +46,7 @@ const KanbanFilterToolbar: React.FC<FilterToolbarProps> = ({
       {showFilters && (
         <Box sx={{ display: "flex", flexDirection: "column", ml: 2 }}>
           <Typography variant="h6">Filters</Typography>
-          {filters.map((filter) => (
+          {filters.map((filter: any) => (
             <FormControlLabel
               key={filter.value}
               control={

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { useField, useFormikContext } from "formik";
 import {
@@ -15,7 +16,7 @@ import ImageExampleTooltip from "../tools/ImageExampleTooltip";
 interface MultiSelectFieldProps {
   name: string;
   label: string;
-  options: string[];
+  options: any;
   information?: string;
   imageExample?: string;
 }
@@ -69,7 +70,7 @@ const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
           MenuListProps: { disableListWrap: true },
         }}
       >
-        {options?.map((option, index) => (
+        {options?.map((option: any, index: number) => (
           <MenuItem key={index} value={option}>
             {option}
           </MenuItem>

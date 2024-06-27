@@ -8,7 +8,7 @@ import ImageExampleTooltip from "../tools/ImageExampleTooltip";
 interface AutocompleteFieldProps {
   name: string;
   label: string;
-  options: string[];
+  options: any;
   information?: string;
   imageExample?: string;
 }

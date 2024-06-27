@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import {
-  Paper,
   Grid,
   Box,
   List,
@@ -16,7 +16,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { useFormikContext } from "formik";
-import { IRule } from "@/types/rule.types";
+import { IRule } from "@/types/data.types/rule.types";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const LogicCreator: React.FC = () => {

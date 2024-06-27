@@ -16,7 +16,7 @@ interface ConditionalSelectProps {
   name: string;
   selectLabel: string;
   textFieldLabel?: string;
-  options: string[];
+  options: any;
   information?: string;
   imageExample?: string;
 }
@@ -56,7 +56,7 @@ const ConditionalSelect: React.FC<ConditionalSelectProps> = ({
             onChange={handleSelectChange}
             value={field.value || ""}
           >
-            {options?.map((option, index) => (
+            {options?.map((option: any, index: number) => (
               <MenuItem key={index} value={option}>
                 {option}
               </MenuItem>

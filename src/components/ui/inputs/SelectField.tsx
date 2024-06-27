@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { useField } from "formik";
 import { Box, TextField, MenuItem } from "@mui/material";
@@ -6,7 +7,7 @@ import ImageExampleTooltip from "../tools/ImageExampleTooltip";
 interface SelectFieldProps {
   name: string;
   label: string;
-  options: string[];
+  options: any;
   information?: string;
   imageExample?: string;
 }
@@ -31,7 +32,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
         fullWidth
         variant="outlined"
       >
-        {options.map((option, index) => (
+        {options.map((option: any, index: number) => (
           <MenuItem key={index} value={option}>
             {option}
           </MenuItem>
