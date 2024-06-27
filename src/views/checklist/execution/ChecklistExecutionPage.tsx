@@ -10,8 +10,6 @@ import appConfig from "@/configs/app.config";
 import { generateKanbanCols, sorters } from "./utils";
 import KanbanCard from "@/components/common/kanban/KanbanCard";
 
-//const assigneeOptions = ["John Doe", "Jane Smith", "Alice Johnson"];
-
 const ChecklistExecutionPage = () => {
   const [cols, setCols] = useState<IKanbanColumnType[]>([]);
   const [assigneeOptions, setAssigneeOptions] = useState<string[]>([]);
@@ -128,17 +126,14 @@ const ChecklistExecutionPage = () => {
 
     on("cardLocationChange", handleCardLocationChange);
     on("cardAssigneeChange", handleCardAssigneeChange);
-
-    return () => {
-      on("cardLocationChange", handleCardLocationChange);
-      on("cardAssigneeChange", handleCardAssigneeChange);
-    };
   }, [on]);
 
   const filters = assigneeOptions.map((assignee) => ({
     name: assignee,
     value: assignee,
   }));
+
+  console.log("mount"); // This should only log once when the component mounts
 
   return (
     <Box>
