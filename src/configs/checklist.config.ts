@@ -1,0 +1,18 @@
+export const checklistTags = [
+  "SaaS",
+  "TaaS",
+  "on-demand",
+  "prebooking",
+  "skip-billing-v3",
+  "skip-billing-v2",
+  "spontaenous-breaks",
+  "dynamic-breaks",
+  " scheduled-breaks",
+  "no-show",
+  "test-riders",
+  "WFR",
+  "driver-android",
+  "driver-ios",
+  "high-scale-city",
+  "rider-types",
+];
