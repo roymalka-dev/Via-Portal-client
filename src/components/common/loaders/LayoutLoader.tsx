@@ -1,5 +1,7 @@
+import { CircularProgress } from "@mui/material";
+
 const LayoutLoader = () => {
-  return <div>LayoutLoader</div>;
+  return <CircularProgress />;
 };
 
 export default LayoutLoader;
