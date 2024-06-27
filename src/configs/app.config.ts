@@ -20,7 +20,7 @@ const appConfig = {
   apiPrefix: "/api",
   baseUrl: env === "DEV" ? devBaseUrl : prodBaseUrl,
   apiBaseUrl: env === "DEV" ? devApiBaseUrl : prodApiBaseUrl,
-  googleClientId: googleClientId || "client-id",
+  googleClientId: googleClientId || "not-valid-client-id",
   authenticatedEntryPath: "/",
   unAuthenticatedEntryPath: "/auth/login",
 };
