@@ -31,7 +31,7 @@ const ChecklistExecutionPage = () => {
     }
     if (status === "success" && data) {
       const generatedCols = generateKanbanCols(data.execution.items);
-      setAssigneeOptions(data.assignees);
+      setAssigneeOptions([...data.assignees, "Unassigned"]);
       setCols(generatedCols);
     }
   }, [data, error, status]);

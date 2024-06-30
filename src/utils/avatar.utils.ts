@@ -15,6 +15,9 @@ export const generateInitials = (name: string) => {
 };
 
 export const generateColorFromName = (name: string) => {
+  if (name === "Unassigned") {
+    return "gray";
+  }
   const colors = [
     "red",
     "blue",
