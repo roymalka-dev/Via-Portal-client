@@ -42,7 +42,7 @@ const useAddNewItemFormTabs = (
             name: "tags",
             label: "tag",
             type: "multi-select",
-            options: tags || [],
+            options: tags?.map((t) => t.name) || [],
             initialValue: [],
             validation: yup.array().min(0).of(yup.string().required()),
           },

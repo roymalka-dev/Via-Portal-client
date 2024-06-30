@@ -8,6 +8,8 @@ import PageLoader from "@/components/common/loaders/PageLoader";
 import MainLayout from "@/layouts/MainLayout";
 import LayoutLoader from "@/components/common/loaders/LayoutLoader";
 import AuthLayout from "@/layouts/AuthLayout";
+import NotFound from "@/views/auth/NotFound";
+import AccessDenied from "@/views/auth/AccessDenied";
 
 //lazy imports
 const Dashboard = React.lazy(() => import("@/views/dashboard/DashboardPage"));
@@ -149,5 +151,21 @@ export const routes: routeType[] = [
         loader: PageLoader,
       },
     ],
+  },
+  {
+    key: "not-found",
+    path: "*",
+    component: NotFound,
+    loader: PageLoader,
+    protect: false,
+    children: [],
+  },
+  {
+    key: "access-denied",
+    path: "/access-denied",
+    component: AccessDenied,
+    loader: PageLoader,
+    protect: false,
+    children: [],
   },
 ];
