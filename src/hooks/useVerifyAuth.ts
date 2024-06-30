@@ -1,8 +1,9 @@
 import ApiService from "@/services/ApiService";
+import { logout } from "@/store/slices/auth.slice";
 import { RootState } from "@/store/store";
 
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const useVerifyAuth = () => {
@@ -10,6 +11,7 @@ const useVerifyAuth = () => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -20,7 +22,8 @@ const useVerifyAuth = () => {
         }
       } catch (err) {
         console.error("Error verifying user: ", err);
-        navigate("/access-denied");
+        dispatch(logout());
+        navigate("/auth/login");
       }
     };
 
