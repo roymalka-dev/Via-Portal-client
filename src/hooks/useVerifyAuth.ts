@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import ApiService from "@/services/ApiService";
 import { logout } from "@/store/slices/auth.slice";
 import { RootState } from "@/store/store";
