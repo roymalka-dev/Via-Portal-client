@@ -5,12 +5,12 @@ import * as yup from "yup";
 const schema = yup.object().shape({
   name: yup
     .string()
-    .min(3, "Name should be at least 3 characters")
+    .min(1, "Name should be at least 1 character")
     .max(25, "Name should not exceed 25 characters")
     .required("Name is required"),
   description: yup
     .string()
-    .min(3, "Description should be at least 3 characters")
+    .min(1, "Description should be at least 1 character")
     .max(256, "Description should not exceed 256 characters")
     .required("Description is required"),
   url: yup.string().url("URL must be a valid URL").required("URL is required"),
@@ -19,8 +19,8 @@ const schema = yup.object().shape({
     .of(
       yup
         .string()
-        .min(3, "Tag should be at least 3 characters")
-        .max(25, "Tag should not exceed 25 characters")
+        .min(1, "Tag should be at least 1 character")
+        .max(50, "Tag should not exceed 25 characters")
     )
     .required("At least one tag is required"),
 });
@@ -44,28 +44,29 @@ export const convertCSVtoObject = async (file: File): Promise<any[] | null> => {
     reader.onload = async (event) => {
       try {
         const csvString = event.target?.result as string;
-        const lines = csvString.trim().split(/\r?\n/);
+        const lines = csvString.split(/\r?\n/);
         const results: any[] = [];
 
-        // Process each line, skipping the header
+        // Skip the header row and process each line
         for (let i = 1; i < lines.length; i++) {
           const row = lines[i];
           if (!row.trim()) continue;
 
           // Parse CSV row using a regex to handle commas within quoted values
-          const values = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+          const values = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
           if (!values || values.length < 4) {
-            console.error(`Invalid row format at line ${i + 1}: ${row}`);
+            console.log(`Invalid row format at line ${i + 1}: ${row}`);
             continue;
           }
 
-          // Extract values and remove surrounding quotes
-          const [name, description, url, tagsStr] = values.map((val) =>
-            val.replace(/^"|"$/g, "").trim()
-          );
+          // Extract values and handle specific fields differently
+          const name = values[0]; // Keep as-is
+          const description = values[1]; // Keep as-is
+          const url = values[2]; // Keep as-is
+          const tagsStr = values[3]; // Keep as-is
 
-          // Parse tags into array
-          const tags = tagsStr.split(",").map((tag) => tag.trim());
+          // Parse tags into array, trimming spaces around each tag
+          const tags = tagsStr.split(",").map((tag) => tag);
 
           // Create object with parsed data
           const obj: CSVRow = {
@@ -80,22 +81,27 @@ export const convertCSVtoObject = async (file: File): Promise<any[] | null> => {
             await schema.validate(obj, { abortEarly: false });
             results.push(obj); // Push validated object to results
           } catch (error: any) {
-            console.error(
+            console.log(
               `Validation error for row ${i + 1}: ${JSON.stringify(obj)}`,
               error.errors
             );
-            reject(error);
+            reject(
+              new Error(`Validation error at row ${i + 1}: ${error.errors}`)
+            );
+            return;
           }
         }
 
         resolve(results);
       } catch (error) {
-        reject(error);
+        console.error("Error processing CSV file:", error);
+        reject(new Error(`Error processing CSV file: ${error}`));
       }
     };
 
     reader.onerror = () => {
-      reject(reader.error);
+      console.error("Error reading CSV file");
+      reject(new Error("Error reading CSV file"));
     };
 
     reader.readAsText(file);

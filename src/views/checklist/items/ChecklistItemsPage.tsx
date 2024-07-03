@@ -128,14 +128,12 @@ const ChecklistItemsPage = () => {
 
   const handleImportItems = () => {
     const uploader = async (file: File) => {
-      let result;
       try {
-        result = await convertCSVtoObject(file);
+        return await convertCSVtoObject(file);
       } catch (error) {
-        console.error("Error importing items: ", error);
+        console.log("Error importing items: ", error);
         return null;
       }
-      return result;
     };
     const tabs: ITab[] = [
       {
@@ -155,7 +153,6 @@ const ChecklistItemsPage = () => {
 
     const submitFunction = async (values: IFormInitialValues) => {
       try {
-        console.log("values", values);
         await ApiService.post("/checklist/import-items", values);
       } catch (error) {
         console.error("Error importing items: ", error);
