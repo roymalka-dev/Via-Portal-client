@@ -29,6 +29,7 @@ export const useSocket = (
     }
 
     const newSocket = io(url, {
+      secure: true,
       autoConnect: options?.autoConnect ?? true,
       reconnectionAttempts: options?.reconnectionAttempts ?? Infinity,
       reconnectionDelay: options?.reconnectionDelay ?? 1000,
