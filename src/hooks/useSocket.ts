@@ -16,10 +16,29 @@ export const useSocket = (url: string, options?: UseSocketOptions) => {
 
   useEffect(() => {
     const newSocket = io(url, {
-      autoConnect: true,
+      autoConnect: options?.autoConnect ?? true,
+      reconnectionAttempts: options?.reconnectionAttempts ?? Infinity,
+      reconnectionDelay: options?.reconnectionDelay ?? 1000,
       query: { id: options?.id },
       ...options,
     });
+
+    newSocket.on("connect", () => {
+      console.log("Socket connected");
+    });
+
+    newSocket.on("connect_error", (error) => {
+      console.error("Connection error:", error);
+    });
+
+    newSocket.on("disconnect", (reason) => {
+      console.warn("Socket disconnected:", reason);
+      if (reason === "io server disconnect") {
+        // The disconnection was initiated by the server, you need to manually reconnect
+        newSocket.connect();
+      }
+    });
+
     setSocket(newSocket);
 
     return () => {
@@ -27,14 +46,20 @@ export const useSocket = (url: string, options?: UseSocketOptions) => {
     };
   }, [url]);
 
-  const emit = (event: string, data?: any) => {
-    socket?.emit(event, data);
-  };
+  const emit = useCallback(
+    (event: string, data?: any) => {
+      socket?.emit(event, data);
+    },
+    [socket]
+  );
 
-  const on = (event: string, func: (...args: any[]) => void) => {
-    socket?.on(event, func);
-    return () => socket?.off(event, func);
-  };
+  const on = useCallback(
+    (event: string, func: (...args: any[]) => void) => {
+      socket?.on(event, func);
+      return () => socket?.off(event, func);
+    },
+    [socket]
+  );
 
   const off = useCallback(
     (event: string, func: (...args: any[]) => void) => {

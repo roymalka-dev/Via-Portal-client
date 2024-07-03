@@ -29,7 +29,6 @@ const ChecklistCreateExecPage = () => {
   const submitRequest = async (request: RequestType) => {
     try {
       const res = await ApiService.post("/execution/create-execution", request);
-      console.log(res);
       navigate(`/checklist/execution/${res.data.data}`);
     } catch (error) {
       console.error(error);
