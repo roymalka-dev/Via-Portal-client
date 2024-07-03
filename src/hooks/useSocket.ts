@@ -7,19 +7,32 @@ interface UseSocketOptions {
   autoConnect?: boolean;
   reconnectionAttempts?: number;
   reconnectionDelay?: number;
-  id: string;
+  id?: string;
+  query?: { [key: string]: any };
   [key: string]: any;
 }
 
-export const useSocket = (url: string, options?: UseSocketOptions) => {
+export const useSocket = (
+  url: string,
+  options?: UseSocketOptions,
+  dependencies: any[] = []
+) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
+    if (
+      options?.query &&
+      !Object.values(options.query).every((value) => value)
+    ) {
+      // If any query parameter is undefined, do not initialize the socket
+      return;
+    }
+
     const newSocket = io(url, {
       autoConnect: options?.autoConnect ?? true,
       reconnectionAttempts: options?.reconnectionAttempts ?? Infinity,
       reconnectionDelay: options?.reconnectionDelay ?? 1000,
-      query: { id: options?.id },
+      query: options?.query,
       ...options,
     });
 
@@ -44,7 +57,7 @@ export const useSocket = (url: string, options?: UseSocketOptions) => {
     return () => {
       newSocket.close();
     };
-  }, [url]);
+  }, [url, ...dependencies]); // Include dependencies to reinitialize the socket when they change
 
   const emit = useCallback(
     (event: string, data?: any) => {

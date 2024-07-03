@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useCallback } from "react";
-import { Box } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import { KanbanBoard } from "@/components/common/kanban/KanbanBoard";
 import { IKanbanColumnType } from "@/types/components.types/kanban.types";
 import useFetch from "@/hooks/useFetch";
@@ -9,17 +9,23 @@ import { useSocket } from "@/hooks/useSocket";
 import appConfig from "@/configs/app.config";
 import { generateKanbanCols, sorters } from "./utils";
 import KanbanCard from "@/components/common/kanban/KanbanCard";
+import { generateColorFromName, generateInitials } from "@/utils/avatar.utils";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const ChecklistExecutionPage = () => {
   const [cols, setCols] = useState<IKanbanColumnType[]>([]);
   const [assigneeOptions, setAssigneeOptions] = useState<string[]>([]);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [onlineAssignees, setOnlineAssignees] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<{
     columnId: string;
     criteria: string;
   } | null>(null);
 
   const execId = window.location.pathname.split("/").pop() || "";
+
+  const user = useSelector((state: RootState) => state.auth.email);
 
   const { data, status, error } = useFetch<any>(
     `execution/get-execution/${execId}`
@@ -36,12 +42,17 @@ const ChecklistExecutionPage = () => {
     }
   }, [data, error, status]);
 
-  const { emit, on, off } = useSocket(appConfig.apiBaseUrl, {
-    id: execId,
-    autoConnect: true,
-    reconnectionAttempts: 5,
-    reconnectionDelay: 500,
-  });
+  const { emit, on, off } = useSocket(
+    appConfig.apiBaseUrl,
+    {
+      query: { user, id: execId },
+      id: execId,
+      autoConnect: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 500,
+    },
+    [user, execId]
+  );
 
   const onDragEndHandler = useCallback(
     async (result: any): Promise<boolean> => {
@@ -124,8 +135,13 @@ const ChecklistExecutionPage = () => {
       );
     };
 
+    const handleConnectedUsers = (users: string[]) => {
+      setOnlineAssignees(users);
+    };
+
     on("cardLocationChange", handleCardLocationChange);
     on("cardAssigneeChange", handleCardAssigneeChange);
+    on("connectedUsers", handleConnectedUsers);
 
     return () => {
       off("cardLocationChange", handleCardLocationChange);
@@ -140,6 +156,26 @@ const ChecklistExecutionPage = () => {
 
   return (
     <Box>
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        sx={{ ml: 4, alignItems: "center", gap: 1 }}
+      >
+        <Typography variant="h2" sx={{ mr: 2 }}>
+          {data?.execution.name}
+        </Typography>
+        {onlineAssignees.map((assignee) => (
+          <Avatar
+            key={assignee}
+            sx={{
+              bgcolor: generateColorFromName(assignee),
+              opacity: 0.5,
+            }}
+          >
+            {generateInitials(assignee)}
+          </Avatar>
+        ))}
+      </Box>
       <KanbanBoard
         cols={cols}
         onDragEndHandler={onDragEndHandler}
