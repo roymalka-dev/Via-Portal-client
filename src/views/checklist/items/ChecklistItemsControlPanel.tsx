@@ -6,15 +6,18 @@ import {
   SpeedDialAction,
   SpeedDialIcon,
 } from "@mui/material";
+import UploadIcon from "@mui/icons-material/Upload";
 import AddIcon from "@mui/icons-material/Add";
 interface ControlPanelProps {
   onAddItem: (name: string) => void;
+  onImportItems: () => void;
   onSearch: (query: string) => void;
 }
 
 const ChecklistItemsControlPanel: React.FC<ControlPanelProps> = ({
   onAddItem,
   onSearch,
+  onImportItems,
 }) => {
   const [query, setQuery] = useState("");
 
@@ -27,6 +30,10 @@ const ChecklistItemsControlPanel: React.FC<ControlPanelProps> = ({
   const handleAddClick = () => {
     const name = "name";
     onAddItem(name);
+  };
+
+  const handleImportItemsClick = () => {
+    onImportItems();
   };
 
   return (
@@ -56,6 +63,11 @@ const ChecklistItemsControlPanel: React.FC<ControlPanelProps> = ({
           icon={<AddIcon />}
           tooltipTitle="Add Item"
           onClick={handleAddClick}
+        />
+        <SpeedDialAction
+          icon={<UploadIcon />}
+          tooltipTitle="Import Items"
+          onClick={handleImportItemsClick}
         />
       </SpeedDial>
     </Box>

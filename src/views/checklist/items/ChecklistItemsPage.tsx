@@ -26,6 +26,10 @@ import useEditItemFormTabs from "./hooks/useEditItemTabs";
 import { generateEditItemForm } from "./form/generateEditItemForm";
 import ChecklistItemsControlPanel from "./ChecklistItemsControlPanel";
 import { IchecklistTag } from "@/types/data.types/checklist.types";
+
+import { FormStepper, IFormInitialValues, ITab } from "form-stepper";
+import { convertCSVtoObject } from "@/utils/csv.utils";
+
 const ChecklistItemsPage = () => {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [presentedData, setPresentedData] = useState<IKanbanCardType[]>([]);
@@ -122,6 +126,59 @@ const ChecklistItemsPage = () => {
     addItemHandler(modal, generateAddItemFormCallback);
   };
 
+  const handleImportItems = () => {
+    const uploader = async (file: File) => {
+      let result;
+      try {
+        result = await convertCSVtoObject(file);
+      } catch (error) {
+        console.error("Error importing items: ", error);
+        return null;
+      }
+      return result;
+    };
+    const tabs: ITab[] = [
+      {
+        name: "Import Items",
+        fields: [
+          {
+            name: "items",
+            label: "File",
+            type: "file",
+            maxFileSize: 30 * 1000 * 1024, // 30MB
+
+            fileUploader: uploader,
+          },
+        ],
+      },
+    ];
+
+    const submitFunction = async (values: IFormInitialValues) => {
+      try {
+        console.log("values", values);
+        await ApiService.post("/checklist/import-items", values);
+      } catch (error) {
+        console.error("Error importing items: ", error);
+      }
+
+      modal.closeModal();
+    };
+
+    modal.setContent(
+      <FormStepper
+        messageHandler={(message: string) => {
+          alert(message);
+        }}
+        tabs={tabs}
+        submitFunction={submitFunction}
+        submitText={"Import"}
+        useCache={true}
+      />
+    );
+
+    modal.openModal();
+  };
+
   const handleDeleteItem = (id: string) => {
     try {
       ApiService.delete(`/checklist/delete-item/${id}`);
@@ -152,6 +209,7 @@ const ChecklistItemsPage = () => {
         Checklist Items
       </Typography>
       <ChecklistItemsControlPanel
+        onImportItems={handleImportItems}
         onAddItem={handleAddItem}
         onSearch={setSearchQuery}
       />
