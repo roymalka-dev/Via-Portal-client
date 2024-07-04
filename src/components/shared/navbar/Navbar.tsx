@@ -26,6 +26,7 @@ import { navigationItems } from "@/configs/navigation.config";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import Logout from "@/views/auth/Logout";
+import ThemeSelector from "../ThemeSelector";
 
 const ControlPanelDrawer: React.FC = () => {
   const theme = useTheme();
@@ -205,8 +206,12 @@ const ControlPanelDrawer: React.FC = () => {
               <ListItem sx={{ pl: 4 }}>
                 <ListItemText primary={user.authorizations?.join(", ")} />
               </ListItem>
+
               <ListItem sx={{ pl: 4 }}>
-                <Logout />
+                <Box sx={{ display: "flex", gap: 1 }}>
+                  <Logout />
+                  <ThemeSelector />
+                </Box>
               </ListItem>
             </List>
           </Collapse>

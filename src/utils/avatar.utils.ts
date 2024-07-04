@@ -27,7 +27,6 @@ export const generateColorFromName = (name: string) => {
     "purple",
     "pink",
     "brown",
-    "cyan",
     "teal",
     "indigo",
   ];

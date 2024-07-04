@@ -26,6 +26,7 @@ const ChecklistExecutionPage = () => {
   const execId = window.location.pathname.split("/").pop() || "";
 
   const user = useSelector((state: RootState) => state.auth.email);
+  const themeMode = useSelector((state: RootState) => state.theme.mode);
 
   const { data, status, error } = useFetch<any>(
     `execution/get-execution/${execId}`
@@ -169,7 +170,10 @@ const ChecklistExecutionPage = () => {
             key={assignee}
             sx={{
               bgcolor: generateColorFromName(assignee),
-              opacity: 0.5,
+              color: themeMode === "light" ? "white" : "white",
+              opacity: themeMode === "light" ? 0.5 : 0.7,
+              border:
+                themeMode === "dark" ? "2px solid #fff" : "2px solid #fff",
             }}
           >
             {generateInitials(assignee)}
