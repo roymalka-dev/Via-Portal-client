@@ -47,7 +47,6 @@ const ChecklistExecutionPage = () => {
   const execId = window.location.pathname.split("/").pop() || "";
 
   const user = useSelector((state: RootState) => state.auth);
-  const userEmail = user.email;
   const themeMode = useSelector((state: RootState) => state.theme.mode);
 
   const { data, status, error, refetch } = useFetch<any>(
@@ -82,7 +81,7 @@ const ChecklistExecutionPage = () => {
   const { emit, on, off } = useSocket(
     appConfig.apiBaseUrl,
     {
-      query: { userEmail, id: execId },
+      query: { user: user.email, id: execId },
       id: execId,
       autoConnect: true,
       reconnectionAttempts: 5,
@@ -200,6 +199,10 @@ const ChecklistExecutionPage = () => {
       off("cardAssigneeChange", handleCardAssigneeChange);
     };
   }, [on]);
+
+  useEffect(() => {
+    console.log("onlineAssignees", onlineAssignees);
+  }, [onlineAssignees]);
 
   return (
     <Box>

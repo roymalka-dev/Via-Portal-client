@@ -82,7 +82,6 @@ const EditExecution: React.FC<EditExecutionProps> = ({ id, reload }) => {
   };
 
   const handleRemove = async (itemId: string) => {
-    console.log("Removing item: ", itemId, id);
     await ApiService.post(`execution/remove-item-from-execution`, {
       executionId: id,
       itemId: itemId,
