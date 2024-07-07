@@ -37,10 +37,6 @@ export const useSocket = (
       ...options,
     });
 
-    newSocket.on("connect", () => {
-      console.log("Socket connected");
-    });
-
     newSocket.on("connect_error", (error) => {
       console.error("Connection error:", error);
     });

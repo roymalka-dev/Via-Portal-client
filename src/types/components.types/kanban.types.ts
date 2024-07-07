@@ -5,6 +5,7 @@ export interface IKanbanCardType {
   status: string;
   description: string;
   assignee: string;
+  tags: string[];
   url: string;
 
   data?: any;
@@ -23,8 +24,7 @@ export interface KanbanBoardType {
 }
 
 export interface IKanbanFilterOption {
-  name: string;
-  value: string;
+  [key: string]: { name: string; value: string }[];
 }
 
 export interface IKanbanSortOption {

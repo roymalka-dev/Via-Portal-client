@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
 import {
   IKanbanColumnType,
   IKanbanFilterOption,
@@ -15,11 +14,11 @@ interface IKanbanBoardProps {
   cols: IKanbanColumnType[];
   cardUi: React.FC<any>;
   onDragEndHandler: (result: any) => Promise<boolean>;
-  filters: IKanbanFilterOption[];
+  filters: IKanbanFilterOption;
   sorters: IKanbanSortOption[];
-  onFilterChange: (filters: string[]) => void;
+  onFilterChange: (filters: { assignee: string[]; tags: string[] }) => void;
   onSortChange: (columnId: string, sortBy: string) => void;
-  selectedFilters: string[];
+  selectedFilters: { assignee: string[]; tags: string[] };
   sortBy: {
     columnId: string;
     criteria: string;
@@ -49,12 +48,21 @@ export const KanbanBoard: React.FC<IKanbanBoardProps> = ({
     let updatedCols = [...cols];
 
     // Apply filtering
-    if (selectedFilters.length > 0) {
+    if (
+      selectedFilters.assignee.length > 0 ||
+      selectedFilters.tags.length > 0
+    ) {
       updatedCols = updatedCols.map((col) => ({
         ...col,
-        cards: col.cards.filter((card) =>
-          selectedFilters.includes(card.assignee)
-        ),
+        cards: col.cards.filter((card) => {
+          const assigneeMatch =
+            selectedFilters.assignee.length === 0 ||
+            selectedFilters.assignee.includes(card.assignee);
+          const tagMatch =
+            selectedFilters.tags.length === 0 ||
+            selectedFilters.tags.some((tag) => card.tags?.includes(tag));
+          return assigneeMatch && tagMatch;
+        }),
       }));
     }
 

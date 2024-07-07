@@ -3,7 +3,10 @@
 import { useEffect, useState, useCallback } from "react";
 import { Avatar, Box, Typography } from "@mui/material";
 import { KanbanBoard } from "@/components/common/kanban/KanbanBoard";
-import { IKanbanColumnType } from "@/types/components.types/kanban.types";
+import {
+  IKanbanColumnType,
+  IKanbanFilterOption,
+} from "@/types/components.types/kanban.types";
 import useFetch from "@/hooks/useFetch";
 import { useSocket } from "@/hooks/useSocket";
 import appConfig from "@/configs/app.config";
@@ -12,12 +15,26 @@ import KanbanCard from "@/components/common/kanban/KanbanCard";
 import { generateColorFromName, generateInitials } from "@/utils/avatar.utils";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import TagsDisplay from "@/components/ui/tags/TagsDisplay";
+
+export interface IFilters {
+  assignee: string[];
+  tags: string[];
+}
 
 const ChecklistExecutionPage = () => {
   const [cols, setCols] = useState<IKanbanColumnType[]>([]);
   const [assigneeOptions, setAssigneeOptions] = useState<string[]>([]);
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<IFilters>({
+    assignee: [],
+    tags: [],
+  });
+  const [filters, setFilters] = useState<IKanbanFilterOption>({
+    assignee: [],
+    tags: [],
+  });
   const [onlineAssignees, setOnlineAssignees] = useState<string[]>([]);
+
   const [sortBy, setSortBy] = useState<{
     columnId: string;
     criteria: string;
@@ -40,6 +57,18 @@ const ChecklistExecutionPage = () => {
       const generatedCols = generateKanbanCols(data.execution.items);
       setAssigneeOptions([...data.assignees, "Unassigned"]);
       setCols(generatedCols);
+
+      const filters: IKanbanFilterOption = {
+        assignee: data.assignees.map((assignee: string) => ({
+          name: assignee,
+          value: assignee,
+        })),
+        tags: data.execution.tags?.map((tag: string) => ({
+          name: tag,
+          value: tag,
+        })),
+      };
+      setFilters(filters);
     }
   }, [data, error, status]);
 
@@ -84,7 +113,10 @@ const ChecklistExecutionPage = () => {
     [emit]
   );
 
-  const handleFilterChange = (filters: string[]) => {
+  const handleFilterChange = (filters: {
+    assignee: string[];
+    tags: string[];
+  }) => {
     setSelectedFilters(filters);
   };
 
@@ -150,11 +182,6 @@ const ChecklistExecutionPage = () => {
     };
   }, [on]);
 
-  const filters = assigneeOptions.map((assignee) => ({
-    name: assignee,
-    value: assignee,
-  }));
-
   return (
     <Box>
       <Box
@@ -180,6 +207,10 @@ const ChecklistExecutionPage = () => {
           </Avatar>
         ))}
       </Box>
+      <Box sx={{ ml: 2, mb: -4 }}>
+        <TagsDisplay tags={data?.execution.tags || []} />
+      </Box>
+
       <KanbanBoard
         cols={cols}
         onDragEndHandler={onDragEndHandler}

@@ -30,6 +30,7 @@ export const generateKanbanCols = (
       status: request.status,
       data: request.data,
       description: request.description,
+      tags: request.tags,
       assignee: request.assignee || "Unassigned",
       url: request.url,
     };
