@@ -34,11 +34,11 @@ const ChecklistExecutionPage = () => {
     tags: [],
   });
   const [onlineAssignees, setOnlineAssignees] = useState<string[]>([]);
-
   const [sortBy, setSortBy] = useState<{
     columnId: string;
     criteria: string;
   } | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const execId = window.location.pathname.split("/").pop() || "";
 
@@ -54,16 +54,16 @@ const ChecklistExecutionPage = () => {
       console.log("Error: ", error);
     }
     if (status === "success" && data) {
-      const generatedCols = generateKanbanCols(data.execution.items);
+      const generatedCols = generateKanbanCols(data?.execution?.items);
       setAssigneeOptions([...data.assignees, "Unassigned"]);
       setCols(generatedCols);
 
       const filters: IKanbanFilterOption = {
-        assignee: data.assignees.map((assignee: string) => ({
+        assignee: data?.assignees.map((assignee: string) => ({
           name: assignee,
           value: assignee,
         })),
-        tags: data.execution.tags?.map((tag: string) => ({
+        tags: data?.execution?.tags?.map((tag: string) => ({
           name: tag,
           value: tag,
         })),
@@ -118,6 +118,10 @@ const ChecklistExecutionPage = () => {
     tags: string[];
   }) => {
     setSelectedFilters(filters);
+  };
+
+  const handleSearchQueryChange = (query: string) => {
+    setSearchQuery(query);
   };
 
   const handleSortChange = (columnId: string, criteria: string) => {
@@ -190,7 +194,7 @@ const ChecklistExecutionPage = () => {
         sx={{ ml: 4, alignItems: "center", gap: 1 }}
       >
         <Typography variant="h2" sx={{ mr: 2 }}>
-          {data?.execution.name}
+          {data?.execution?.name}
         </Typography>
         {onlineAssignees.map((assignee) => (
           <Avatar
@@ -207,10 +211,7 @@ const ChecklistExecutionPage = () => {
           </Avatar>
         ))}
       </Box>
-      <Box sx={{ ml: 2, mb: -4 }}>
-        <TagsDisplay tags={data?.execution.tags || []} />
-      </Box>
-
+      <TagsDisplay tags={data?.execution?.tags || []} />
       <KanbanBoard
         cols={cols}
         onDragEndHandler={onDragEndHandler}
@@ -227,6 +228,8 @@ const ChecklistExecutionPage = () => {
         onSortChange={handleSortChange}
         selectedFilters={selectedFilters}
         sortBy={sortBy}
+        searchQuery={searchQuery}
+        onSearchQueryChange={handleSearchQueryChange}
       />
     </Box>
   );

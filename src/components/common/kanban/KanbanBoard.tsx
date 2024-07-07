@@ -23,6 +23,8 @@ interface IKanbanBoardProps {
     columnId: string;
     criteria: string;
   } | null;
+  searchQuery: string;
+  onSearchQueryChange: (query: string) => void;
   title?: string;
 }
 
@@ -36,6 +38,8 @@ export const KanbanBoard: React.FC<IKanbanBoardProps> = ({
   onSortChange,
   selectedFilters,
   sortBy,
+  searchQuery,
+  onSearchQueryChange,
   title,
 }) => {
   const [columns, setColumns] = useState<IKanbanColumnType[]>(cols);
@@ -50,7 +54,8 @@ export const KanbanBoard: React.FC<IKanbanBoardProps> = ({
     // Apply filtering
     if (
       selectedFilters.assignee.length > 0 ||
-      selectedFilters.tags.length > 0
+      selectedFilters.tags.length > 0 ||
+      searchQuery
     ) {
       updatedCols = updatedCols.map((col) => ({
         ...col,
@@ -60,8 +65,12 @@ export const KanbanBoard: React.FC<IKanbanBoardProps> = ({
             selectedFilters.assignee.includes(card.assignee);
           const tagMatch =
             selectedFilters.tags.length === 0 ||
-            selectedFilters.tags.some((tag) => card.tags?.includes(tag));
-          return assigneeMatch && tagMatch;
+            selectedFilters.tags.some((tag) => card.tags.includes(tag));
+          const searchQueryMatch =
+            searchQuery === "" ||
+            card.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            card.description.toLowerCase().includes(searchQuery.toLowerCase());
+          return assigneeMatch && tagMatch && searchQueryMatch;
         }),
       }));
     }
@@ -91,7 +100,7 @@ export const KanbanBoard: React.FC<IKanbanBoardProps> = ({
     }
 
     setColumns(updatedCols);
-  }, [cols, selectedFilters, sortBy]);
+  }, [cols, selectedFilters, sortBy, searchQuery]);
 
   useEffect(() => {
     applyFiltersAndSorting();
@@ -175,6 +184,8 @@ export const KanbanBoard: React.FC<IKanbanBoardProps> = ({
         <KanbanFilterDropdown
           filters={filters}
           onFilterChange={onFilterChange}
+          searchQuery={searchQuery}
+          onSearchQueryChange={onSearchQueryChange}
         />
       </Box>
       <Box

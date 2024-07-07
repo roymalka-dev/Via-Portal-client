@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Avatar,
   Checkbox,
@@ -11,19 +11,25 @@ import {
   SelectChangeEvent,
   IconButton,
   Box,
+  TextField,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import { debounce } from "lodash";
 import { IKanbanFilterOption } from "@/types/components.types/kanban.types";
 import { generateColorFromName, generateInitials } from "@/utils/avatar.utils";
 
 interface FilterDropdownProps {
   filters: IKanbanFilterOption;
   onFilterChange: (filters: { assignee: string[]; tags: string[] }) => void;
+  searchQuery: string;
+  onSearchQueryChange: (query: string) => void;
 }
 
 const KanbanFilterDropdown: React.FC<FilterDropdownProps> = ({
   filters,
   onFilterChange,
+  searchQuery,
+  onSearchQueryChange,
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedAssignees, setSelectedAssignees] = useState<string[]>([]);
@@ -49,6 +55,18 @@ const KanbanFilterDropdown: React.FC<FilterDropdownProps> = ({
     onFilterChange({ assignee: selectedAssignees, tags: value });
   };
 
+  const debouncedSearchChange = useMemo(
+    () =>
+      debounce((query: string) => {
+        onSearchQueryChange(query);
+      }, 300),
+    [onSearchQueryChange]
+  );
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedSearchChange(event.target.value);
+  };
+
   return (
     <>
       <IconButton onClick={handleClick}>
@@ -61,20 +79,30 @@ const KanbanFilterDropdown: React.FC<FilterDropdownProps> = ({
         PaperProps={{
           style: {
             maxHeight: 48 * 4.5,
-            width: "250px",
+            width: "300px",
           },
         }}
       >
         <Box sx={{ p: 2 }}>
-          <FormControl sx={{ mb: 2, width: "100%" }}>
+          <TextField
+            fullWidth
+            placeholder="Search..."
+            defaultValue={searchQuery}
+            onChange={handleSearchChange}
+            variant="outlined"
+            size="small"
+            sx={{ mb: 2 }}
+          />
+          <FormControl fullWidth sx={{ mb: 2 }}>
             <InputLabel>Filter By Assignee</InputLabel>
             <Select
               multiple
               value={selectedAssignees}
               onChange={handleAssigneeChange}
               renderValue={(selected) => (selected as string[]).join(", ")}
+              label="Filter By Assignee"
             >
-              {filters?.assignee?.map((filter) => (
+              {filters.assignee.map((filter) => (
                 <MenuItem key={filter.value} value={filter.value}>
                   <Checkbox
                     checked={selectedAssignees.indexOf(filter.value) > -1}
@@ -95,15 +123,16 @@ const KanbanFilterDropdown: React.FC<FilterDropdownProps> = ({
               ))}
             </Select>
           </FormControl>
-          <FormControl sx={{ width: "100%" }}>
+          <FormControl fullWidth>
             <InputLabel>Filter By Tags</InputLabel>
             <Select
               multiple
               value={selectedTags}
               onChange={handleTagChange}
               renderValue={(selected) => (selected as string[]).join(", ")}
+              label="Filter By Tags"
             >
-              {filters?.tags?.map((filter) => (
+              {filters.tags.map((filter) => (
                 <MenuItem key={filter.value} value={filter.value}>
                   <Checkbox checked={selectedTags.indexOf(filter.value) > -1} />
                   <ListItemText primary={filter.name} />
