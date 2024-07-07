@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useCallback } from "react";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, IconButton, Typography } from "@mui/material";
 import { KanbanBoard } from "@/components/common/kanban/KanbanBoard";
 import {
   IKanbanColumnType,
@@ -16,7 +16,11 @@ import { generateColorFromName, generateInitials } from "@/utils/avatar.utils";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import TagsDisplay from "@/components/ui/tags/TagsDisplay";
-
+import useModal from "@/hooks/useModal";
+import EditExecution from "./edit-execution/EditExecution";
+import { CustomModal } from "@/components/common/modal/CustomModal";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import { verifyAuthority } from "@/utils/auth.utils";
 export interface IFilters {
   assignee: string[];
   tags: string[];
@@ -42,12 +46,15 @@ const ChecklistExecutionPage = () => {
 
   const execId = window.location.pathname.split("/").pop() || "";
 
-  const user = useSelector((state: RootState) => state.auth.email);
+  const user = useSelector((state: RootState) => state.auth);
+  const userEmail = user.email;
   const themeMode = useSelector((state: RootState) => state.theme.mode);
 
-  const { data, status, error } = useFetch<any>(
+  const { data, status, error, refetch } = useFetch<any>(
     `execution/get-execution/${execId}`
   );
+
+  const modal = useModal();
 
   useEffect(() => {
     if (error) {
@@ -75,7 +82,7 @@ const ChecklistExecutionPage = () => {
   const { emit, on, off } = useSocket(
     appConfig.apiBaseUrl,
     {
-      query: { user, id: execId },
+      query: { userEmail, id: execId },
       id: execId,
       autoConnect: true,
       reconnectionAttempts: 5,
@@ -112,6 +119,14 @@ const ChecklistExecutionPage = () => {
     },
     [emit]
   );
+
+  const handleEditExecution = () => {
+    modal.setContent(
+      <EditExecution id={execId} close={modal.closeModal} reload={refetch} />
+    );
+
+    modal.openModal();
+  };
 
   const handleFilterChange = (filters: {
     assignee: string[];
@@ -211,7 +226,25 @@ const ChecklistExecutionPage = () => {
           </Avatar>
         ))}
       </Box>
-      <TagsDisplay tags={data?.execution?.tags || []} />
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          alignContent: "center",
+          alignItems: "center",
+          ml: 2,
+          mt: 5,
+          mb: -7,
+        }}
+      >
+        <TagsDisplay tags={data?.execution?.tags || []} />
+        {verifyAuthority("ADMIN", user.authorizations) && (
+          <IconButton onClick={handleEditExecution}>
+            <EditNoteIcon />
+          </IconButton>
+        )}
+      </Box>
+
       <KanbanBoard
         cols={cols}
         onDragEndHandler={onDragEndHandler}
@@ -230,6 +263,12 @@ const ChecklistExecutionPage = () => {
         sortBy={sortBy}
         searchQuery={searchQuery}
         onSearchQueryChange={handleSearchQueryChange}
+      />
+      <CustomModal
+        open={modal.isOpen}
+        title={""}
+        handleClose={modal.closeModal}
+        children={modal.content}
       />
     </Box>
   );
