@@ -200,10 +200,6 @@ const ChecklistExecutionPage = () => {
     };
   }, [on]);
 
-  useEffect(() => {
-    console.log("onlineAssignees", onlineAssignees);
-  }, [onlineAssignees]);
-
   return (
     <Box>
       <Box
