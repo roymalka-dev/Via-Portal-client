@@ -10,6 +10,7 @@ import LayoutLoader from "@/components/common/loaders/LayoutLoader";
 import AuthLayout from "@/layouts/AuthLayout";
 import NotFound from "@/views/auth/NotFound";
 import AccessDenied from "@/views/auth/AccessDenied";
+import ScopingPage from "@/views/scoping/ScopingPage";
 
 //lazy imports
 const Dashboard = React.lazy(() => import("@/views/dashboard/DashboardPage"));
@@ -119,6 +120,14 @@ export const routes: routeType[] = [
         path: "/checklist/execution/:id",
         key: "checklist-execution",
         component: ChecklistExecution,
+        protect: true,
+        authority: "user",
+        loader: PageLoader,
+      },
+      {
+        path: "/scoping",
+        key: "scoping",
+        component: ScopingPage,
         protect: true,
         authority: "user",
         loader: PageLoader,

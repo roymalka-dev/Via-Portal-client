@@ -7,7 +7,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import PageviewIcon from "@mui/icons-material/Pageview";
 import ListIcon from "@mui/icons-material/List";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-
+import SavedSearchIcon from "@mui/icons-material/SavedSearch";
 export const navigationItems: InavigationItem[] = [
   {
     name: "Dashboard",
@@ -62,6 +62,12 @@ export const navigationItems: InavigationItem[] = [
         authority: "USER",
       },
     ],
+  },
+  {
+    name: "Scoping",
+    path: "/scoping",
+    icon: SavedSearchIcon,
+    authority: "ADMIN",
   },
   {
     name: "Control Panel",
