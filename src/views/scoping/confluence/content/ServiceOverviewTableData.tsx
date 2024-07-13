@@ -42,6 +42,14 @@ export const generateServiceOverviewTableData = (
           : "",
       ],
       [
+        "Book rides without PM (skip billing v1)",
+        configurations.can_book_free_rides_without_pm
+          ? configurations.can_book_free_rides_without_pm +
+            " " +
+            scopingBadges.generatedWithTool
+          : "",
+      ],
+      [
         `Web App ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,
         configurations.web_app
           ? `${configurations.web_app} ${scopingBadges.generatedWithTool}`

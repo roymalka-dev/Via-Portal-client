@@ -6,17 +6,20 @@ import { scopingBadges } from "../elements/badge";
 export const generateRiderTypesTableData = (
   configurations: CityConfigurations
 ): TableData => {
-  const riderTypesArray = configurations.rider_types ?? [""];
+  //const riderTypesArray = [""]; //configurations.rider_types ?? [""];
   return {
     headline: `Rider Types ${
       scopingBadges.upgradeTeam + " " + scopingBadges.mandatory
     }`,
     headers: ["Rider type", "Description", "Max passengers", "Price"],
+    rows: [configurations.rider_types || ""],
+    /*
     rows: riderTypesArray?.map((riderType: any) => [
       riderType.type || "",
       riderType.description || "",
       riderType.maxPassengers || "",
       riderType.price || "",
     ]),
+    */
   };
 };

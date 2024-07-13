@@ -66,8 +66,11 @@ export const generateGeneralConfigsTableData = (
       ],
       [
         "Rider call driver",
-        configurations.show_phone_button_in_rider_app
-          ? configurations.show_phone_button_in_rider_app +
+        configurations.show_phone_button_in_rider_app &&
+        configurations.allow_rider_call_through
+          ? configurations.allow_rider_call_through +
+            " " +
+            configurations.show_phone_button_in_rider_app +
             " " +
             scopingBadges.generatedWithTool
           : "",

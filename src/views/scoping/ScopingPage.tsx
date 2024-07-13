@@ -8,6 +8,7 @@ import { PageBuilder } from "./confluence/PageBuilder";
 import { convertCityData } from "./convertCityData";
 import useModal from "@/hooks/useModal";
 import { CustomModal } from "@/components/common/modal/CustomModal";
+import { scopingConfigs } from "./configs";
 
 const NODE_ENV = import.meta.env.VITE_APP_ENV || process.env.VITE_APP_ENV;
 const VIA_EXPLORER_API =
@@ -152,24 +153,67 @@ const ScopingPage = () => {
     }
   };
 
-  return (
-    <Box>
+  const handleShowConfiglist = () => {
+    modal.openModal();
+    modal.setContent(
       <Box>
-        <Typography variant="h4">Scoping Page</Typography>
+        <Typography variant="h6">Configurations List</Typography>
+        <Box
+          sx={{
+            maxHeight: "300px",
+            overflowY: "auto",
+            mt: 2,
+          }}
+        >
+          <Typography>{scopingConfigs}</Typography>
+        </Box>
+        <Box
+          sx={{
+            mt: 2,
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button onClick={() => navigator.clipboard.writeText(scopingConfigs)}>
+            Copy List
+          </Button>
+          <Button onClick={() => modal.closeModal()}>Close</Button>
+        </Box>
       </Box>
-      <FormStepper
-        tabs={tabs}
-        submitFunction={handleSubmit}
-        submitText="Submit"
-        nextText="Next"
-        useCache={true}
-      />
-      <CustomModal
-        open={modal.isOpen}
-        title={""}
-        handleClose={modal.closeModal}
-        children={modal.content}
-      />
+    );
+  };
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Box
+        sx={{
+          width: "700px",
+          textAlign: "center",
+        }}
+      >
+        <Button onClick={handleShowConfiglist}>
+          Config Explorer Job Configs
+        </Button>
+        <FormStepper
+          tabs={tabs}
+          submitFunction={handleSubmit}
+          submitText="Submit"
+          nextText="Next"
+          useCache={true}
+        />
+        <CustomModal
+          open={modal.isOpen}
+          title={""}
+          handleClose={modal.closeModal}
+          children={modal.content}
+        />
+      </Box>
     </Box>
   );
 };

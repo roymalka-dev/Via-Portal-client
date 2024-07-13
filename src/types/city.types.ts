@@ -92,4 +92,6 @@ export interface CityConfigurations {
   country?: string;
   city?: string;
   app_image?: string;
+  allow_rider_call_through?: boolean;
+  can_book_free_rides_without_pm?: boolean;
 }
