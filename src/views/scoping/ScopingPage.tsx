@@ -112,14 +112,9 @@ const ScopingPage = () => {
         title: `${String(
           convertedCityData.city_short_code
         ).toUpperCase()} 2.0 upgrade city scoping`,
-        ancestors: [{ id: values.parentPageId }],
-        space: { key: values.spaceKey },
-        body: {
-          storage: {
-            value: content,
-            representation: "storage",
-          },
-        },
+        parentPageId: values.parentPageId,
+        spaceKey: values.spaceKey,
+        content: content,
       };
       const response = await ApiService.post(
         "scoping/create-confluence-page",

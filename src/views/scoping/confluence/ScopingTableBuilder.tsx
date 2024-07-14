@@ -9,8 +9,8 @@ export const ScopingTableBuilder = (tableData: TableData) => {
     : 1;
 
   return `
-    <div style="max-width: 760px;">
-      <table class="confluenceTable" data-layout="default" style="width: 100%; table-layout: fixed;">
+    <div style="max-width: 900px; margin-left: 0;">
+      <table class="confluenceTable" data-layout="default" style="width: 760px; table-layout: fixed;">
         <colgroup>
           ${Array(columnCount).fill('<col style="width: 50%;"/>').join("")}
         </colgroup>

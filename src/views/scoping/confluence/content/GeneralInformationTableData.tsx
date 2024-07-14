@@ -62,7 +62,6 @@ export const generateGeneralInformationTableData = (
         configurations.app_image
           ? `<img src="${configurations.app_image}" style="width:50px;height:50px;" alt="App Image"/> ${scopingBadges.generatedWithTool}`
           : "",
-        "image",
       ],
       [
         `iOS Link ${scopingBadges.upgradeTeam}`,
