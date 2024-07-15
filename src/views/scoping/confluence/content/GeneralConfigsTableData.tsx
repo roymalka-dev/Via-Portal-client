@@ -6,98 +6,81 @@ import { scopingBadges } from "../elements/badge";
 export const generateGeneralConfigsTableData = (
   configurations: CityConfigurations
 ): TableData => {
-  return {
-    headline: `General Configs  ${
-      scopingBadges.acsa +
-      " " +
-      scopingBadges.upgradeTeam +
-      " " +
-      scopingBadges.mandatory
-    }`,
+  const {
+    show_rider_feedback_distribution_toggle,
+    rider_name_trimming_schema_type,
+    allow_shared_phones,
+    no_show_timer_default_time_seconds,
+    voc_book_ride_enable_pickup_and_dropoff_notes,
+    support_travel_reasons,
+    show_phone_button_in_rider_app,
+    allow_rider_call_through,
+    driver_call_rider,
+    available_payment_methods_configurations,
+    menu,
+  } = configurations;
 
+  const generatedWithTool = scopingBadges.generatedWithTool;
+
+  return {
+    headline: `General Configs ${scopingBadges.acsa} ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,
+    headers: ["Configuration", "Value"],
     rows: [
       [
         "Feedback",
-        configurations.show_rider_feedback_distribution_toggle
-          ? configurations.show_rider_feedback_distribution_toggle +
-            " " +
-            scopingBadges.generatedWithTool
+        show_rider_feedback_distribution_toggle
+          ? `${show_rider_feedback_distribution_toggle} ${generatedWithTool}`
           : "",
       ],
       [
         "Rider name format in driver app",
-        configurations.rider_name_trimming_schema_type
-          ? configurations.rider_name_trimming_schema_type +
-            " " +
-            scopingBadges.generatedWithTool
+        rider_name_trimming_schema_type
+          ? `${rider_name_trimming_schema_type} ${generatedWithTool}`
           : "",
       ],
       [
         "Allow_shared_phone",
-        configurations.allow_shared_phones
-          ? configurations.allow_shared_phones +
-            " " +
-            scopingBadges.generatedWithTool
+        allow_shared_phones
+          ? `${allow_shared_phones} ${generatedWithTool}`
           : "",
       ],
       [
         "No-show timer",
-        configurations.no_show_timer_default_time_seconds
-          ? configurations.no_show_timer_default_time_seconds +
-            " " +
-            scopingBadges.generatedWithTool
+        no_show_timer_default_time_seconds
+          ? `${no_show_timer_default_time_seconds} ${generatedWithTool}`
           : "",
       ],
+
       [
-        "PU & DO Notes",
-        configurations.voc_book_ride_enable_pickup_and_dropoff_notes
-          ? configurations.voc_book_ride_enable_pickup_and_dropoff_notes +
-            " " +
-            scopingBadges.generatedWithTool
+        "PU/DO Notes",
+        voc_book_ride_enable_pickup_and_dropoff_notes
+          ? `${voc_book_ride_enable_pickup_and_dropoff_notes} ${generatedWithTool}`
           : "",
       ],
       [
         "Travel reasons",
-        configurations.support_travel_reasons
-          ? configurations.support_travel_reasons +
-            " " +
-            scopingBadges.generatedWithTool
+        support_travel_reasons
+          ? `${support_travel_reasons} ${generatedWithTool}`
           : "",
       ],
       [
         "Rider call driver",
-        configurations.show_phone_button_in_rider_app &&
-        configurations.allow_rider_call_through
-          ? configurations.allow_rider_call_through +
-            " " +
-            configurations.show_phone_button_in_rider_app +
-            " " +
-            scopingBadges.generatedWithTool
+        show_phone_button_in_rider_app && allow_rider_call_through
+          ? `${allow_rider_call_through} ${show_phone_button_in_rider_app} ${generatedWithTool}`
           : "",
       ],
       [
         "Driver call rider",
-        configurations.driver_call_rider
-          ? configurations.driver_call_rider +
-            " " +
-            scopingBadges.generatedWithTool
-          : "",
+        driver_call_rider ? `${driver_call_rider} ${generatedWithTool}` : "",
       ],
       [
         "PM + which types?",
-        configurations.available_payment_methods_configurations
-          ? configurations.available_payment_methods_configurations +
-            " " +
-            scopingBadges.generatedWithTool
+        available_payment_methods_configurations
+          ? `${available_payment_methods_configurations} ${generatedWithTool}`
           : "",
       ],
       ["Special features?", ""],
-      [
-        "Menu configs",
-        configurations.menu
-          ? configurations.menu + " " + scopingBadges.generatedWithTool
-          : "",
-      ],
+      ["Menu configs", menu ? `${menu} ${generatedWithTool}` : ""],
       ["Override configuration", ""],
       ["Ride importers", ""],
     ],

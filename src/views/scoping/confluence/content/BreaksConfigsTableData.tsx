@@ -9,6 +9,7 @@ export const generateBreaksConfigsTableData = (
     headline: `Breaks Configs ${
       scopingBadges.upgradeTeam + " " + scopingBadges.mandatory
     }`,
+    headers: ["Configuration", "Value"],
     rows: [
       [
         "End break early",

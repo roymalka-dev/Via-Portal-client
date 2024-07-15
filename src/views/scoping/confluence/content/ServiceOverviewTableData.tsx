@@ -8,6 +8,7 @@ export const generateServiceOverviewTableData = (
 ): TableData => {
   return {
     headline: "Service Overview",
+    headers: ["Description", "Details"],
     rows: [
       [
         `C2C / D2D ${scopingBadges.acsa} ${scopingBadges.mandatory}`,

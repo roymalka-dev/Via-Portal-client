@@ -6,7 +6,7 @@ import { scopingBadges } from "../elements/badge";
 export const generatePolygonBlockersTableData = (
   configurations: CityConfigurations
 ): TableData => {
-  const polygonBlockersArray = configurations.polygonpermission ?? [""];
+  const polygonBlockersArray = configurations.polygonpermission ?? [];
   return {
     headline: `Polygon Blockers ${
       scopingBadges.acsa +
@@ -15,11 +15,11 @@ export const generatePolygonBlockersTableData = (
       " " +
       scopingBadges.mandatory
     }`,
-    headers: [`PU `, "DO", "Service tag"],
-    rows: polygonBlockersArray?.map((blocker: any) => [
-      blocker?.origin || "",
-      blocker?.destination || "",
-      blocker?.serviceTag || "",
+    headers: [`PU`, "DO", "Service tag"],
+    rows: polygonBlockersArray.map((blocker: any) => [
+      blocker.origin || "",
+      blocker.destination || "",
+      blocker.serviceTag || "",
     ]),
   };
 };

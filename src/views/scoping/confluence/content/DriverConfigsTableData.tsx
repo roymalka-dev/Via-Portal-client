@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CityConfigurations } from "@/types/city.types";
 import { TableData } from "../PageBuilder";
 import { scopingBadges } from "../elements/badge";
@@ -8,7 +9,8 @@ export const generateDriverConfigsTableData = (
   return {
     headline: `Driver Configs ${
       scopingBadges.upgradeTeam + " " + scopingBadges.mandatory
-    } `,
+    }`,
+    headers: ["Configuration", "Value"],
     rows: [
       [
         "Service type (Taas/ SaaS)",

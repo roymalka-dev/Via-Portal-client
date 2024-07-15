@@ -9,9 +9,7 @@ export const generateAcsaConfigsVansTableData = (
   const acsaVansArray = configurations.acsa_vans ?? [""];
 
   return {
-    headline: `ACSA Config Vans${
-      scopingBadges.acsa + " " + scopingBadges.mandatory
-    }`,
+    headline: `ACSA Config Vans ${scopingBadges.acsa} ${scopingBadges.mandatory}`,
     headers: [
       "Profile",
       "1.0 group ID / polygon",

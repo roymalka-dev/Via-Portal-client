@@ -6,19 +6,16 @@ import { scopingBadges } from "../elements/badge";
 export const generateRiderTypesTableData = (
   configurations: CityConfigurations
 ): TableData => {
-  const riderTypesArray = configurations?.rider_types?.toString() ?? [""];
   return {
     headline: `Rider Types ${
       scopingBadges.upgradeTeam + " " + scopingBadges.mandatory
     }`,
     headers: ["Rider type", "Description", "Max passengers", "Price"],
-    //rows: [configurations.rider_types?.toString() || "", "", "", ""],
-
-    rows: riderTypesArray?.map((riderType: any) => [
+    rows: configurations?.rider_types?.map((riderType: any) => [
       riderType.type || "",
       riderType.description || "",
-      riderType.maxPassengers || "",
-      riderType.price || "",
-    ]),
+      riderType.maxPassengers?.toString() || "",
+      riderType.price?.toString() || "",
+    ]) || [["", "", "", ""]],
   };
 };

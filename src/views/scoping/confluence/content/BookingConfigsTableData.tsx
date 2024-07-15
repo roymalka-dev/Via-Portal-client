@@ -7,7 +7,7 @@ export const generateBookingConfigsTableData = (
 ): TableData => {
   return {
     headline: `Booking Configs ${scopingBadges.acsa} ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,
-
+    headers: ["Configuration", "Value"],
     rows: [
       [
         "Booking types - From app + Admin",

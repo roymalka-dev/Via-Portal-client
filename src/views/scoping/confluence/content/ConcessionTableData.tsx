@@ -11,8 +11,8 @@ export const generateConcessionTableData = (
     headline: `Concession ${
       scopingBadges.upgradeTeam + " " + scopingBadges.mandatory
     }`,
-    headers: [`Concession  `, "Description", "Price"],
-    rows: concessionArray?.map((concession: any) => [
+    headers: ["Concession", "Description", "Price"],
+    rows: concessionArray.map((concession: any) => [
       concession.name || "",
       concession.description || "",
       concession.price || "",

@@ -19,6 +19,7 @@ import { generateScreenshotsTableData } from "./content/ScreenshotsTableData";
 import { scopingBadges } from "./elements/badge";
 import { generatePricingTableData } from "./content/PricingTableData";
 
+//prettier-ignore
 export interface TableData {
   headline?: string;
   headers?: string[];
@@ -28,75 +29,52 @@ export interface TableData {
 export const PageBuilder = async (
   configurations: CityConfigurations | any
 ): Promise<string> => {
-  const city_short_code = String(configurations.city_short_code).toUpperCase();
+  const cityShortCode = String(configurations.city_short_code).toUpperCase();
+
   const content = `
-    <body class="mceContentBody aui-theme-default wiki-content fullsize">
-      <h2>[${city_short_code}]-[${configurations.city_id}] | 2.0 upgrade [${
+       <h2>[${cityShortCode}]-[${configurations.city_id}] | 2.0 Upgrade [${
     configurations.date
   }]</h2>
-      <p>&nbsp;</p>
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <p>This is the new 2.0 upgrade city scoping template which summarizes the services behavior on 1.0 and expectations for the upgrade process.</p>
-              <ul>
-                <li><p>${
-                  scopingBadges.upgradeTeam
-                } - to be filled out by the 2.0 upgrade implementation team</p></li>
-                <li><p>${scopingBadges.acsa} - to be filled out by ACSA</p></li>
-                <li><p>${
-                  scopingBadges.ps
-                } - to be filled out by the Partner Success manager</p></li>
-                <li><p>${
-                  scopingBadges.mandatory
-                } - fields which need to be filled <strong>before</strong> the PS review</p></li>
-                <li><p>${
-                  scopingBadges.generatedWithTool
-                } - fields created using the portal scoping tool</p></li>
-              </ul>
-              <p>PS - please complete as soon as your upgrade Slack channel is opened by Mackenzie and before partner training.</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generatePartnerScoringTableData())}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(
-        generateGeneralInformationTableData(configurations)
-      )}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generateServiceOverviewTableData(configurations))}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generateServiceHoursTableData(configurations))}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generatePolygonBlockersTableData(configurations))}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generateBookingConfigsTableData(configurations))}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generateGeneralConfigsTableData(configurations))}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generateConcessionTableData(configurations))}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generateRiderTypesTableData(configurations))}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generatePricingTableData(configurations))}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generateDriverConfigsTableData(configurations))}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generateBreaksConfigsTableData(configurations))}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generateAcsaConfigsTableData())}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(
-        generateAcsaConfigsRequestsTableData(configurations)
-      )}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generateAcsaConfigsVansTableData(configurations))}
-      <p>&nbsp;</p>
-      ${ScopingTableBuilder(generateScreenshotsTableData())}
-    </body>
+
+    <ac:structured-macro ac:name="panel">
+      <ac:parameter ac:name="bgColor">#E6F7FF</ac:parameter> <!-- Blue background color -->
+      <ac:rich-text-body>
+        <p>This is the new 2.0 upgrade city scoping template which summarizes the services behavior on 1.0 and expectations for the upgrade process.</p>
+        <ul>
+          <li>${
+            scopingBadges.upgradeTeam
+          } - to be filled out by the 2.0 upgrade implementation team</li>
+          <li>${scopingBadges.acsa} - to be filled out by ACSA</li>
+          <li>${
+            scopingBadges.ps
+          } - to be filled out by the Partner Success manager</li>
+          <li>${
+            scopingBadges.mandatory
+          } - fields which need to be filled <strong>before</strong> the PS review</li>
+          <li>${
+            scopingBadges.generatedWithTool
+          } - fields created using the portal scoping tool</li>
+        </ul>
+        <p>PS - please complete as soon as your upgrade Slack channel is opened by Mackenzie and before partner training.</p>
+      </ac:rich-text-body>
+    </ac:structured-macro>
+    
+    ${ScopingTableBuilder(generatePartnerScoringTableData())}
+    ${ScopingTableBuilder(generateGeneralInformationTableData(configurations))}
+    ${ScopingTableBuilder(generateServiceOverviewTableData(configurations))}
+    ${ScopingTableBuilder(generateServiceHoursTableData(configurations))}
+    ${ScopingTableBuilder(generatePolygonBlockersTableData(configurations))}
+    ${ScopingTableBuilder(generateBookingConfigsTableData(configurations))}
+    ${ScopingTableBuilder(generateGeneralConfigsTableData(configurations))}
+    ${ScopingTableBuilder(generateConcessionTableData(configurations))}
+    ${ScopingTableBuilder(generateRiderTypesTableData(configurations))}
+    ${ScopingTableBuilder(generatePricingTableData(configurations))}
+    ${ScopingTableBuilder(generateDriverConfigsTableData(configurations))}
+    ${ScopingTableBuilder(generateBreaksConfigsTableData(configurations))}
+    ${ScopingTableBuilder(generateAcsaConfigsTableData())}
+    ${ScopingTableBuilder(generateAcsaConfigsRequestsTableData(configurations))}
+    ${ScopingTableBuilder(generateAcsaConfigsVansTableData(configurations))}
+    ${ScopingTableBuilder(generateScreenshotsTableData())}
   `;
   return content;
 };

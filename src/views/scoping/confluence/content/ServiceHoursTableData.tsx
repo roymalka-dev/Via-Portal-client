@@ -13,7 +13,7 @@ export const generateServiceHoursTableData = (
       " " +
       scopingBadges.mandatory
     }`,
-
+    headers: ["Day", "Hours"],
     rows: [
       ["Monday", configurations.service_hours?.monday || ""],
       ["Tuesday", configurations.service_hours?.tuesday || ""],

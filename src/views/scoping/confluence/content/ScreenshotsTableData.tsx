@@ -3,9 +3,8 @@ import { TableData } from "../PageBuilder";
 
 export const generateScreenshotsTableData = (): TableData => {
   return {
-    headline: `Screenshots ${
-      scopingBadges.upgradeTeam + " " + scopingBadges.mandatory
-    }`,
+    headline: `Screenshots ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,
+    headers: ["Description", "Screenshot"],
     rows: [
       ["Rider app - polygons appearance", ""],
       ["Rider app - menu items", ""],
