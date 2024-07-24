@@ -1,10 +1,65 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CityConfigurations } from "@/types/city.types";
 import { TableData } from "../PageBuilder";
 import { scopingBadges } from "../elements/badge";
 
+const dayMap: { [key: string]: string } = {
+  "0": "Monday",
+  "1": "Tuesday",
+  "2": "Wednesday",
+  "3": "Thursday",
+  "4": "Friday",
+  "5": "Saturday",
+  "6": "Sunday",
+};
+
+const formatServiceHours = (hours: any) => {
+  return hours
+    .map((slot: any) => {
+      if (slot.open === "00.00" && slot.close === "00.00") {
+        return "Closed";
+      }
+      return `${slot.open}-${slot.close}`;
+    })
+    .join("\n");
+};
+
 export const generateServiceHoursTableData = (
   configurations: CityConfigurations
 ): TableData => {
+  let serviceHours =
+    configurations.service_hours_for_prescheduling_departure_time_selection ||
+    {};
+
+  // If serviceHours is a string, parse it to an object
+  if (typeof serviceHours === "string") {
+    try {
+      serviceHours = JSON.parse(serviceHours);
+    } catch (error) {
+      console.error("Failed to parse service hours JSON:", error);
+      serviceHours = {};
+    }
+  }
+
+  const rows = Object.keys(dayMap).map((dayKey) => {
+    const day = dayMap[dayKey];
+    const hours = serviceHours[dayKey]
+      ? formatServiceHours(serviceHours[dayKey])
+      : "Closed";
+    return [day, hours];
+  });
+
+  rows.push(
+    [
+      `Time before end of service to book "depart at" rides ${scopingBadges.ps}`,
+      configurations.time_before_end_of_service || "",
+    ],
+    [
+      `Time after start of service to book "arrive by" rides ${scopingBadges.ps}`,
+      configurations.time_after_end_of_service || "",
+    ]
+  );
+
   return {
     headline: `Service Hours ${
       scopingBadges.acsa +
@@ -14,22 +69,6 @@ export const generateServiceHoursTableData = (
       scopingBadges.mandatory
     }`,
     headers: ["Day", "Hours"],
-    rows: [
-      ["Monday", configurations.service_hours?.monday || ""],
-      ["Tuesday", configurations.service_hours?.tuesday || ""],
-      ["Wednesday", configurations.service_hours?.wednesday || ""],
-      ["Thursday", configurations.service_hours?.thursday || ""],
-      ["Friday", configurations.service_hours?.friday || ""],
-      ["Saturday", configurations.service_hours?.saturday || ""],
-      ["Sunday", configurations.service_hours?.sunday || ""],
-      [
-        `Time before end of service to book "depart at" rides ${scopingBadges.ps}`,
-        configurations.time_before_end_of_service || "",
-      ],
-      [
-        `Time after start of service to book "arrive by" rides ${scopingBadges.ps}`,
-        configurations.time_after_end_of_service || "",
-      ],
-    ],
+    rows,
   };
 };

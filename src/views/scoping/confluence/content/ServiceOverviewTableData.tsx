@@ -50,24 +50,19 @@ export const generateServiceOverviewTableData = (
             scopingBadges.generatedWithTool
           : "",
       ],
-      [
-        `Web App ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,
-        configurations.web_app
-          ? `${configurations.web_app} ${scopingBadges.generatedWithTool}`
-          : "",
-      ],
+
       [
         `Welcome Email ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,
-        configurations.welcome_email
-          ? `${configurations.welcome_email} ${scopingBadges.generatedWithTool}`
+        configurations.send_welcome_email
+          ? `${configurations.send_welcome_email} ${scopingBadges.generatedWithTool}`
           : "",
       ],
       [
-        `OD service - MAX_ETA ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,
+        `OD service - MAX_ETA ${scopingBadges.acsa} ${scopingBadges.mandatory}`,
         configurations.max_eta ? configurations.max_eta : "",
       ],
       [
-        `Min_request_distance ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,
+        `min_request_distance ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,
         configurations.min_request_distance
           ? configurations.min_request_distance
           : "",

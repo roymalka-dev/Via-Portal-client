@@ -18,6 +18,9 @@ import { generateAcsaConfigsVansTableData } from "./content/AcsaConfigsVansTable
 import { generateScreenshotsTableData } from "./content/ScreenshotsTableData";
 import { scopingBadges } from "./elements/badge";
 import { generatePricingTableData } from "./content/PricingTableData";
+import { ReportingTableData } from "./content/ReportingTableData";
+import { generatePaymentMethodsTableData } from "./content/PaymentMethodsTableData";
+import { generateMenuConfigTableData } from "./content/MenuConfigTableData";
 
 //prettier-ignore
 export interface TableData {
@@ -40,6 +43,7 @@ export const PageBuilder = async (
       <ac:parameter ac:name="bgColor">#E6F7FF</ac:parameter> <!-- Blue background color -->
       <ac:rich-text-body>
         <p>This is the new 2.0 upgrade city scoping template which summarizes the services behavior on 1.0 and expectations for the upgrade process.</p>
+        <p>Fields tagged with:</p>
         <ul>
           <li>${
             scopingBadges.upgradeTeam
@@ -62,10 +66,13 @@ export const PageBuilder = async (
     ${ScopingTableBuilder(generatePartnerScoringTableData())}
     ${ScopingTableBuilder(generateGeneralInformationTableData(configurations))}
     ${ScopingTableBuilder(generateServiceOverviewTableData(configurations))}
+    ${ScopingTableBuilder(ReportingTableData())}
     ${ScopingTableBuilder(generateServiceHoursTableData(configurations))}
     ${ScopingTableBuilder(generatePolygonBlockersTableData(configurations))}
     ${ScopingTableBuilder(generateBookingConfigsTableData(configurations))}
     ${ScopingTableBuilder(generateGeneralConfigsTableData(configurations))}
+    ${ScopingTableBuilder(generatePaymentMethodsTableData(configurations))}
+     ${ScopingTableBuilder(generateMenuConfigTableData(configurations))}
     ${ScopingTableBuilder(generateConcessionTableData(configurations))}
     ${ScopingTableBuilder(generateRiderTypesTableData(configurations))}
     ${ScopingTableBuilder(generatePricingTableData(configurations))}

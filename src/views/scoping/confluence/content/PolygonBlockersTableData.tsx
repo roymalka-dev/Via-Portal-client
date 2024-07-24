@@ -6,7 +6,7 @@ import { scopingBadges } from "../elements/badge";
 export const generatePolygonBlockersTableData = (
   configurations: CityConfigurations
 ): TableData => {
-  const polygonBlockersArray = configurations.polygonpermission ?? [];
+  const polygonBlockersArray = configurations.polygonpermission ?? [""];
   return {
     headline: `Polygon Blockers ${
       scopingBadges.acsa +

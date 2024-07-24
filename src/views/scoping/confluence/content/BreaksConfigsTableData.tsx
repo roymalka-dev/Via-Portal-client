@@ -13,8 +13,8 @@ export const generateBreaksConfigsTableData = (
     rows: [
       [
         "End break early",
-        configurations.end_break_early
-          ? configurations.end_break_early +
+        configurations.enable_driver_breaks_control
+          ? configurations.enable_driver_breaks_control.toString() +
             " " +
             scopingBadges.generatedWithTool
           : "",

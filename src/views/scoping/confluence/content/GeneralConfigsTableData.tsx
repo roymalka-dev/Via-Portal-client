@@ -8,16 +8,15 @@ export const generateGeneralConfigsTableData = (
 ): TableData => {
   const {
     show_rider_feedback_distribution_toggle,
-    rider_name_trimming_schema_type,
+    rider_last_name_format_for_driver_app_display,
     allow_shared_phones,
-    no_show_timer_default_time_seconds,
     voc_book_ride_enable_pickup_and_dropoff_notes,
     support_travel_reasons,
     show_phone_button_in_rider_app,
     allow_rider_call_through,
     driver_call_rider,
-    available_payment_methods_configurations,
-    menu,
+    minimum_no_show_wait,
+    minimum_no_show_wait_early_arrival,
   } = configurations;
 
   const generatedWithTool = scopingBadges.generatedWithTool;
@@ -34,8 +33,8 @@ export const generateGeneralConfigsTableData = (
       ],
       [
         "Rider name format in driver app",
-        rider_name_trimming_schema_type
-          ? `${rider_name_trimming_schema_type} ${generatedWithTool}`
+        rider_last_name_format_for_driver_app_display
+          ? `${rider_last_name_format_for_driver_app_display} ${generatedWithTool}`
           : "",
       ],
       [
@@ -44,10 +43,17 @@ export const generateGeneralConfigsTableData = (
           ? `${allow_shared_phones} ${generatedWithTool}`
           : "",
       ],
+
       [
-        "No-show timer",
-        no_show_timer_default_time_seconds
-          ? `${no_show_timer_default_time_seconds} ${generatedWithTool}`
+        "Minimum no show timer",
+        minimum_no_show_wait
+          ? `${minimum_no_show_wait} ${generatedWithTool}`
+          : "",
+      ],
+      [
+        "Minimum no show timer for early arrival",
+        minimum_no_show_wait_early_arrival
+          ? `${minimum_no_show_wait_early_arrival} ${generatedWithTool}`
           : "",
       ],
 
@@ -73,14 +79,9 @@ export const generateGeneralConfigsTableData = (
         "Driver call rider",
         driver_call_rider ? `${driver_call_rider} ${generatedWithTool}` : "",
       ],
-      [
-        "PM + which types?",
-        available_payment_methods_configurations
-          ? `${available_payment_methods_configurations} ${generatedWithTool}`
-          : "",
-      ],
+
       ["Special features?", ""],
-      ["Menu configs", menu ? `${menu} ${generatedWithTool}` : ""],
+
       ["Override configuration", ""],
       ["Ride importers", ""],
     ],

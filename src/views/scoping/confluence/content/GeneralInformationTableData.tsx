@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CityConfigurations } from "@/types/city.types";
 import { TableData } from "../PageBuilder";
 import { scopingBadges } from "../elements/badge";
@@ -17,7 +16,6 @@ export const generateGeneralInformationTableData = (
     city,
     web_app,
     app_name,
-    app_image,
     ios_link,
     ios_version,
     android_link,
@@ -62,7 +60,9 @@ export const generateGeneralInformationTableData = (
       [
         `Web App ${scopingBadges.upgradeTeam}`,
         web_app
-          ? `[${web_app}|${encodeURL(web_app)}] ${generatedWithTool}`
+          ? `<p><a href='${encodeURL(
+              web_app
+            )}}'>Webapp Link</a> ${generatedWithTool}</p> `
           : "",
       ],
       [
@@ -70,27 +70,21 @@ export const generateGeneralInformationTableData = (
         app_name ? `${app_name} ${generatedWithTool}` : "",
       ],
       [
-        `App Image ${scopingBadges.upgradeTeam}`,
-        app_image
-          ? `<img src="${encodeURL(
-              app_image
-            )}" style="width:50px;height:50px;" alt="App Image"/> ${generatedWithTool}`
-          : "",
-      ],
-      [
         `iOS Link ${scopingBadges.upgradeTeam}`,
         ios_link
-          ? `[iOS Link|${encodeURL(ios_link)}] ${generatedWithTool}`
+          ? `<p><a href='${ios_link}'>IOS Link</a> ${generatedWithTool}</p> `
           : "",
       ],
       [
         `iOS Version ${scopingBadges.upgradeTeam}`,
-        ios_version ? `${ios_version} ${generatedWithTool}` : "",
+        ios_version ? `${encodeURL(ios_version)} ${generatedWithTool}` : "",
       ],
       [
         `Android Link ${scopingBadges.upgradeTeam}`,
         android_link
-          ? `[Android Link|${encodeURL(android_link)}] ${generatedWithTool}`
+          ? `<p><a href='${encodeURL(
+              android_link
+            )}'>Android Link</a> ${generatedWithTool}</p> `
           : "",
       ],
       [
@@ -100,15 +94,17 @@ export const generateGeneralInformationTableData = (
       [
         `City Overview Confluence ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,
         city_overview_link
-          ? `[City Overview|${encodeURL(
+          ? `<p><a href='${encodeURL(
               city_overview_link
-            )}] ${generatedWithTool}`
+            )}'>City Overview Link</a> ${generatedWithTool}</p> `
           : "",
       ],
       [
         `2.0 upgrade Epic ticket ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,
         jira_ticket
-          ? `[Jira Ticket|${encodeURL(jira_ticket)}] ${generatedWithTool}`
+          ? `<p><a href='${encodeURL(
+              jira_ticket
+            )}'>Jira Ticket Link</a> ${generatedWithTool}</p> `
           : "",
       ],
       [`PS ${scopingBadges.ps}`, ps ? `${ps} ${generatedWithTool}` : ""],

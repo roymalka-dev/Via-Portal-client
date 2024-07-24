@@ -19,7 +19,7 @@ export interface CityConfigurations {
   rider_billing_type?: string;
   city_overview_link?: string;
   jira_ticket?: string;
-  welcome_email?: string;
+  send_welcome_email?: string;
   rider_types?: any;
   show_rider_feedback_distribution_toggle?: string;
   allow_shared_phones?: string;
@@ -94,4 +94,7 @@ export interface CityConfigurations {
   app_image?: string;
   allow_rider_call_through?: boolean;
   can_book_free_rides_without_pm?: boolean;
+  rider_last_name_format_for_driver_app_display?: string;
+  enable_driver_breaks_control?: string;
+  service_hours_for_prescheduling_departure_time_selection?: any;
 }
