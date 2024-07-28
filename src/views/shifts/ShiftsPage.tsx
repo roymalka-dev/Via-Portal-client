@@ -98,18 +98,42 @@ Good luck! :viablueheart:\n\n` + formattedResponse
                 sx={{ width: 250 }}
               />
             </Box>
-            <Button
-              type="submit"
-              variant="outlined"
-              disabled={isSubmitting}
-              sx={{ my: 2, position: "relative" }}
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                justifyContent: "center",
+                width: "100%",
+              }}
             >
-              {isSubmitting ? (
-                <CircularProgress size={24} sx={{ position: "absolute" }} />
-              ) : (
-                "Fetch Shifts"
-              )}
-            </Button>
+              <Button
+                type="submit"
+                variant="outlined"
+                disabled={isSubmitting}
+                sx={{ my: 2, width: "auto", position: "relative" }}
+              >
+                {isSubmitting ? (
+                  <CircularProgress size={24} sx={{ position: "absolute" }} />
+                ) : (
+                  "Fetch Shifts"
+                )}
+              </Button>
+              <Button
+                onClick={() => {
+                  navigator.clipboard
+                    .writeText(status)
+                    .then(() => console.log("Copied to clipboard"))
+                    .catch((error) =>
+                      console.error("Error copying text: ", error)
+                    );
+                }}
+                variant="outlined"
+                disabled={!status || status === "Failed to fetch data"} // Disable if no status or on fetch error
+                sx={{ my: 2, width: "auto" }}
+              >
+                Copy to Clipboard
+              </Button>
+            </Box>
             <TextField
               label="Response"
               multiline
