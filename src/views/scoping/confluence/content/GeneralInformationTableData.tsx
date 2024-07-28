@@ -14,7 +14,7 @@ export const generateGeneralInformationTableData = (
     region,
     country,
     city,
-    web_app,
+    web_app_domain_url,
     app_name,
     ios_link,
     ios_version,
@@ -59,9 +59,9 @@ export const generateGeneralInformationTableData = (
       ],
       [
         `Web App ${scopingBadges.upgradeTeam}`,
-        web_app
+        web_app_domain_url
           ? `<p><a href='${encodeURL(
-              web_app
+              web_app_domain_url
             )}}'>Webapp Link</a> ${generatedWithTool}</p> `
           : "",
       ],

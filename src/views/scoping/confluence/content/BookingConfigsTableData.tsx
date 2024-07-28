@@ -101,8 +101,8 @@ export const generateBookingConfigsTableData = (
       ],
       [
         "Finalize config",
-        configurations.finalize_config
-          ? `"finalize_time_before_ride_in_minutes": ${configurations.finalize_config.timeBeforeRide}, "finalize_time_buffer_in_minutes": ${configurations.finalize_config.timeBuffer} ${scopingBadges.generatedWithTool}`
+        configurations.finalize_methods
+          ? `${configurations.finalize_methods}` //`"finalize_time_before_ride_in_minutes": ${configurations.finalize_config.timeBeforeRide}, "finalize_time_buffer_in_minutes": ${configurations.finalize_config.timeBuffer} ${scopingBadges.generatedWithTool}`
           : "",
       ],
       [

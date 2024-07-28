@@ -40,6 +40,7 @@ export type FieldConfig<T extends RequestType> = {
     | "multi-input"
     | "conditional-select"
     | "auto-complete"
+    | "3-multi-field"
     | "logic-creator";
   validation: yup.AnySchema;
   options?: string[] | IchecklistTag[];

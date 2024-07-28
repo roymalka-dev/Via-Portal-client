@@ -10,7 +10,7 @@ export interface CityConfigurations {
   pso?: string;
   psm?: string;
   c2c_d2d?: string;
-  web_app?: string;
+  web_app_domain_url?: string;
   max_eta?: string;
   end_break_early?: string;
   commitment_type?: string;
@@ -97,4 +97,5 @@ export interface CityConfigurations {
   rider_last_name_format_for_driver_app_display?: string;
   enable_driver_breaks_control?: string;
   service_hours_for_prescheduling_departure_time_selection?: any;
+  finalize_methods?: string;
 }

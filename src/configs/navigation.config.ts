@@ -7,6 +7,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import PageviewIcon from "@mui/icons-material/Pageview";
 import ListIcon from "@mui/icons-material/List";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SavedSearchIcon from "@mui/icons-material/SavedSearch";
 export const navigationItems: InavigationItem[] = [
   {
@@ -68,6 +69,12 @@ export const navigationItems: InavigationItem[] = [
     path: "/scoping",
     icon: SavedSearchIcon,
     authority: "ADMIN",
+  },
+  {
+    name: "Shifts",
+    path: "/shifts",
+    icon: CalendarMonthIcon,
+    authority: "USER",
   },
   {
     name: "Control Panel",

@@ -17,6 +17,8 @@ const Dashboard = React.lazy(() => import("@/views/dashboard/DashboardPage"));
 const TravelLogic = React.lazy(
   () => import("@/views/travelLogic/TravelLogicPage")
 );
+
+const ShiftsPage = React.lazy(() => import("@/views/shifts/ShiftsPage"));
 const TravelLogicCreate = React.lazy(
   () => import("@/views/travelLogic/create/TravelLogicCreatePage")
 );
@@ -128,6 +130,14 @@ export const routes: routeType[] = [
         path: "/scoping",
         key: "scoping",
         component: ScopingPage,
+        protect: true,
+        authority: "user",
+        loader: PageLoader,
+      },
+      {
+        path: "/shifts",
+        key: "shifts",
+        component: ShiftsPage,
         protect: true,
         authority: "user",
         loader: PageLoader,
