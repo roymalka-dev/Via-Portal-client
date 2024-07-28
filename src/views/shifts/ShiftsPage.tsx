@@ -34,9 +34,9 @@ const ShiftsPage = () => {
       const formattedResponse = formatResponse(response);
       actions.setStatus(
         `Hey everyone,
-Our next 2.0 upgrade will take place on tomorrow Sunday for your city, starting at 06:30.
-Tagging the shifts in case any issue will be raised, please approve your availability. Thanks a lot in advance!
-Good luck!\n\n` + formattedResponse
+Our next 2.0 upgrade will take place on <date> for <tenant>-<id> TaaS/SaaS OD/PB city, starting at 06:30.
+Tagging the shifts in case any issue will be raised, please approve your availability /reply with :+1::skin-tone-2: . Thanks a lot in advance!
+Good luck! :viablueheart:\n\n` + formattedResponse
       );
     } catch (error) {
       console.error("Error fetching data:", error);
