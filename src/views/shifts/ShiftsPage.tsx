@@ -51,7 +51,7 @@ Good luck! :viablueheart:\n\n` + formattedResponse
       .map(([category, shifts]) => {
         const allNames = Object.values(shifts as { [s: string]: unknown })
           .flat()
-          .map((name) => `@${name}`)
+          .map((name) => `@ ${name}`)
           .join(", ");
         return `${category}: ${allNames}`;
       })
