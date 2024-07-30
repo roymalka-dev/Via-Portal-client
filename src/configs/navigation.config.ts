@@ -9,6 +9,7 @@ import ListIcon from "@mui/icons-material/List";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SavedSearchIcon from "@mui/icons-material/SavedSearch";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 export const navigationItems: InavigationItem[] = [
   {
     name: "Dashboard",
@@ -26,6 +27,12 @@ export const navigationItems: InavigationItem[] = [
         name: "Create",
         path: "/travel-logic/create",
         icon: AddCircleIcon,
+        authority: "USER",
+      },
+      {
+        name: "Import",
+        path: "/travel-logic/import",
+        icon: UploadFileIcon,
         authority: "USER",
       },
       /*

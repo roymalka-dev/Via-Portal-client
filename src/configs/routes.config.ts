@@ -22,6 +22,10 @@ const ShiftsPage = React.lazy(() => import("@/views/shifts/ShiftsPage"));
 const TravelLogicCreate = React.lazy(
   () => import("@/views/travelLogic/create/TravelLogicCreatePage")
 );
+
+const TravelLogicImport = React.lazy(
+  () => import("@/views/travelLogic/import/TravelLogicImportPage")
+);
 const TravelLogicRepository = React.lazy(
   () => import("@/views/travelLogic/repository/TravelLogicRepositoryPage")
 );
@@ -74,6 +78,14 @@ export const routes: routeType[] = [
         path: "/travel-logic/create",
         key: "travel-logic-create",
         component: TravelLogicCreate,
+        protect: true,
+        authority: "user",
+        loader: PageLoader,
+      },
+      {
+        path: "/travel-logic/import",
+        key: "travel-logic-import",
+        component: TravelLogicImport,
         protect: true,
         authority: "user",
         loader: PageLoader,
