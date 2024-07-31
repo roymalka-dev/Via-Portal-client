@@ -166,7 +166,7 @@ const ScopingPage = () => {
             mt: 2,
           }}
         >
-          <Typography>{scopingConfigs}</Typography>
+          <Typography>{scopingConfigs.join(",")}</Typography>
         </Box>
         <Box
           sx={{
@@ -175,7 +175,11 @@ const ScopingPage = () => {
             justifyContent: "space-between",
           }}
         >
-          <Button onClick={() => navigator.clipboard.writeText(scopingConfigs)}>
+          <Button
+            onClick={() =>
+              navigator.clipboard.writeText(scopingConfigs.join(","))
+            }
+          >
             Copy List
           </Button>
           <Button onClick={() => modal.closeModal()}>Close</Button>

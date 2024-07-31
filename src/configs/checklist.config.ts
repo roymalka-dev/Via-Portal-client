@@ -7,7 +7,7 @@ export const checklistTags = [
   "skip-billing-v2",
   "spontaenous-breaks",
   "dynamic-breaks",
-  " scheduled-breaks",
+  "scheduled-breaks",
   "no-show",
   "test-riders",
   "WFR",

@@ -76,12 +76,26 @@ export const navigationItems: InavigationItem[] = [
     path: "/scoping",
     icon: SavedSearchIcon,
     authority: "ADMIN",
+    children: [
+      {
+        name: "Create",
+        path: "/scoping/create",
+        icon: AddCircleIcon,
+        authority: "USER",
+      },
+    ],
   },
   {
     name: "Shifts",
     path: "/shifts",
     icon: CalendarMonthIcon,
     authority: "USER",
+  },
+  {
+    name: "Wizard",
+    path: "/wizard",
+    icon: AutoFixHighIcon,
+    authority: "ADMIN",
   },
   {
     name: "Control Panel",

@@ -10,7 +10,6 @@ import LayoutLoader from "@/components/common/loaders/LayoutLoader";
 import AuthLayout from "@/layouts/AuthLayout";
 import NotFound from "@/views/auth/NotFound";
 import AccessDenied from "@/views/auth/AccessDenied";
-import ScopingPage from "@/views/scoping/ScopingPage";
 
 //lazy imports
 const Dashboard = React.lazy(() => import("@/views/dashboard/DashboardPage"));
@@ -42,6 +41,12 @@ const ChecklistRepository = React.lazy(
 const ChecklistExecution = React.lazy(
   () => import("@/views/checklist/execution/ChecklistExecutionPage")
 );
+
+const ScopingCreatePage = React.lazy(
+  () => import("@/views/scoping/ScopingPage")
+);
+
+const WizardPage = React.lazy(() => import("@/views/wizard/WizardPage"));
 
 const ControlPanel = React.lazy(
   () => import("@/views/control-panel/ControlPanelPage")
@@ -139,17 +144,26 @@ export const routes: routeType[] = [
         loader: PageLoader,
       },
       {
-        path: "/scoping",
+        path: "/scoping/create",
         key: "scoping",
-        component: ScopingPage,
+        component: ScopingCreatePage,
+        protect: true,
+        authority: "user",
+        loader: PageLoader,
+      },
+
+      {
+        path: "/shifts",
+        key: "shifts",
+        component: ShiftsPage,
         protect: true,
         authority: "user",
         loader: PageLoader,
       },
       {
-        path: "/shifts",
-        key: "shifts",
-        component: ShiftsPage,
+        path: "/wizard",
+        key: "wizard",
+        component: WizardPage,
         protect: true,
         authority: "user",
         loader: PageLoader,
