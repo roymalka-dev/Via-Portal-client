@@ -12,6 +12,7 @@ import { PageBuilder } from "../scoping/confluence/PageBuilder";
 import { generateChecklistFromConfigFile } from "../checklist/create/utils/generateChecklistFromConfigFile";
 import { scopingConfigs } from "../scoping/configs";
 import { csvConfigsInterpreter } from "../scoping/csvConfigsInterpreter";
+import { OTHER_CONFIGS } from "./configs";
 
 const NODE_ENV = import.meta.env.VITE_APP_ENV || process.env.VITE_APP_ENV;
 const VIA_EXPLORER_API =
@@ -56,6 +57,14 @@ const tabs: ITab[] = [
         name: "jira_ticket",
         type: "text",
         validations: yup.string().url(),
+      },
+      {
+        label: "Other Configurations",
+        name: "other_configs",
+        type: "checkbox",
+        options: OTHER_CONFIGS,
+        validations: yup.array().of(yup.string()),
+        info: "Select one or more options",
       },
       {
         label: "Confluence Parent Page Id",
@@ -243,7 +252,8 @@ const WizardPage: React.FC = () => {
           const checklistData = await generateChecklistFromConfigFile(
             configs,
             cityData.data,
-            checklistName
+            checklistName,
+            values.other_configs
           );
 
           const res = await ApiService.post(

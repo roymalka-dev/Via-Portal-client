@@ -22,7 +22,6 @@ export const generateGeneralInformationTableData = (
     android_version,
     city_overview_link,
     jira_ticket,
-    ps,
     pso,
     psm,
   } = configurations;
@@ -107,9 +106,9 @@ export const generateGeneralInformationTableData = (
             )}'>Jira Ticket Link</a> ${generatedWithTool}</p> `
           : "",
       ],
-      [`PS ${scopingBadges.ps}`, ps ? `${ps} ${generatedWithTool}` : ""],
+      [`PS ${scopingBadges.ps}`, psm ? `${psm} ${generatedWithTool}` : ""],
       [`PSO ${scopingBadges.ps}`, pso ? `${pso} ${generatedWithTool}` : ""],
-      [`PSM ${scopingBadges.ps}`, psm ? `${psm} ${generatedWithTool}` : ""],
+
       [
         `Important, Unique, and/or Commercially Sensitive Features and Flows ${scopingBadges.ps} ${scopingBadges.mandatory}`,
         `Please share context on:\n1. Whether the partner has been waiting for 2.0 for specific reasons, and any helpful commercial background\n2. Whether there are unique flows or legacy hacks that we should make sure we discuss in the context of the service design\n3. Whether there are specific pain points the partner is currently facing in the operation of their service\n4. Any sensitivity around upcoming renewal`,

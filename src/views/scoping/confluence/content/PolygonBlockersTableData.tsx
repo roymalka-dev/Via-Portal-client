@@ -6,7 +6,7 @@ import { scopingBadges } from "../elements/badge";
 export const generatePolygonBlockersTableData = (
   configurations: CityConfigurations
 ): TableData => {
-  const polygonBlockersString = configurations.polygon_blockers ?? "[]";
+  const polygonBlockersString = configurations.polygon_blockers ?? `[""]`;
   let polygonBlockersArray: any[] = [];
 
   try {

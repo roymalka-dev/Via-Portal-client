@@ -1,10 +1,12 @@
 import ApiService from "@/services/ApiService";
+import { OTHER_CONFIGS } from "@/views/wizard/configs";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const generateChecklistFromConfigFile = async (
   configs: Record<string, string>,
   _cityData: any,
-  checklistName: string
+  checklistName: string,
+  other_configs: string[]
 ) => {
   if (!configs) {
     return [];
@@ -69,8 +71,13 @@ export const generateChecklistFromConfigFile = async (
     }
   });
 
+  // Ensure tags specified in other_configs are kept
+  const filteredTags = tags.filter(
+    (tag) => !OTHER_CONFIGS.includes(tag) || other_configs.includes(tag)
+  );
+
   return {
     name: checklistName,
-    tags: tags,
+    tags: filteredTags,
   };
 };

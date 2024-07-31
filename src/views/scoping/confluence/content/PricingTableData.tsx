@@ -11,7 +11,7 @@ export const generatePricingTableData = (
     headline: `Pricing (by formula) ${
       scopingBadges.upgradeTeam + " " + scopingBadges.mandatory
     }`,
-    headers: ["Ride type", "Price", "No show / cancellation fees"],
+    headers: ["Rider type", "Price", "No show / cancellation fees"],
     rows: pricingArray.map((price: any) => [
       price.rideType || "",
       price.price || "",

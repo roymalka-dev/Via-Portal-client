@@ -48,7 +48,15 @@ export const generateBreaksConfigsTableData = (
           : "",
       ],
       [
-        "Locationless breaks required?",
+        `Locationless breaks required? ${scopingBadges.ps}`,
+        configurations.allow_breaks_anywhere
+          ? configurations.allow_breaks_anywhere +
+            " " +
+            scopingBadges.generatedWithTool
+          : "",
+      ],
+      [
+        `Regulated breaks required? ${scopingBadges.ps}`,
         configurations.allow_breaks_anywhere
           ? configurations.allow_breaks_anywhere +
             " " +
