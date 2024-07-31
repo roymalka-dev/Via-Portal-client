@@ -23,6 +23,7 @@ const appConfig = {
   googleClientId: googleClientId || "not-valid-client-id",
   authenticatedEntryPath: "/",
   unAuthenticatedEntryPath: "/auth/login",
+  timeToVerifyAuthInMIn: 60,
 };
 
 export default appConfig;

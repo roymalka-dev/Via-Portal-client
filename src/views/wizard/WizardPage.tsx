@@ -114,7 +114,6 @@ const WizardPage: React.FC = () => {
       key: "step1",
       description: "Trigger Jenkins City Check Job",
       action: async () => {
-        return true;
         try {
           const { city_id } = values;
           const configs = scopingConfigs;
@@ -162,7 +161,7 @@ const WizardPage: React.FC = () => {
           return false;
         }
       },
-      delay: 6000, // 60 seconds until Jenkins finishes
+      delay: 60000, // 60 seconds until Jenkins finishes
       required: true,
     },
     {

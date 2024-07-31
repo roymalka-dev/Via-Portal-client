@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import appConfig from "@/configs/app.config";
 import ApiService from "@/services/ApiService";
 import { logout } from "@/store/slices/auth.slice";
 import { RootState } from "@/store/store";
@@ -8,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const useVerifyAuth = () => {
-  const TIME_TO_VERIFY_AUTH_IN_MIN = 30;
+  const TIME_TO_VERIFY_AUTH_IN_MIN = appConfig.timeToVerifyAuthInMIn || 30;
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
