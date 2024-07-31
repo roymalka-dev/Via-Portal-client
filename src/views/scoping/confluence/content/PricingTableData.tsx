@@ -6,7 +6,7 @@ import { scopingBadges } from "../elements/badge";
 export const generatePricingTableData = (
   configurations: CityConfigurations
 ): TableData => {
-  const pricingArray = configurations.pricing ?? [];
+  const pricingArray = configurations.pricing ?? [""];
   return {
     headline: `Pricing (by formula) ${
       scopingBadges.upgradeTeam + " " + scopingBadges.mandatory

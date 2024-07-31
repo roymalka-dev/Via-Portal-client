@@ -6,16 +6,28 @@ import { scopingBadges } from "../elements/badge";
 export const generateRiderTypesTableData = (
   configurations: CityConfigurations
 ): TableData => {
+  const availablePlusOneTypesString =
+    configurations.available_plus_one_types ?? `[""]`;
+  let availablePlusOneTypesArray: any[] = [];
+
+  try {
+    availablePlusOneTypesArray = JSON.parse(availablePlusOneTypesString);
+  } catch (error) {
+    console.error("Failed to parse available_plus_one_types JSON:", error);
+  }
+
+  const rows = availablePlusOneTypesArray.map((riderType: any) => [
+    riderType.name || "",
+    riderType.description || "",
+    riderType.max_limit?.toString() || "",
+    riderType.min_limit?.toString() || "",
+  ]);
+
   return {
     headline: `Rider Types ${
       scopingBadges.upgradeTeam + " " + scopingBadges.mandatory
     }`,
-    headers: ["Rider type", "Description", "Max passengers", "Price"],
-    rows: configurations?.rider_types?.map((riderType: any) => [
-      riderType.type || "",
-      riderType.description || "",
-      riderType.maxPassengers?.toString() || "",
-      riderType.price?.toString() || "",
-    ]) || [["", "", "", ""]],
+    headers: ["Rider type", "Description", "Max limit", "Min limit"],
+    rows: rows.length > 0 ? rows : [["", "", "", ""]],
   };
 };

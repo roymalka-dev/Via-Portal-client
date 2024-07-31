@@ -99,4 +99,6 @@ export interface CityConfigurations {
   service_hours_for_prescheduling_departure_time_selection?: any;
   finalize_methods?: string;
   polygon_blockers?: any;
+  concessions?: any;
+  available_plus_one_types?: any;
 }

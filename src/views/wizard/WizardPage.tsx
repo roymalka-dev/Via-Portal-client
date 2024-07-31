@@ -153,7 +153,7 @@ const WizardPage: React.FC = () => {
           return false;
         }
       },
-      delay: 60000, // 60 seconds until Jenkins finishes
+      delay: 6000, // 60 seconds until Jenkins finishes
       required: true,
     },
     {
@@ -246,7 +246,6 @@ const WizardPage: React.FC = () => {
             checklistName
           );
 
-          console.log(checklistData);
           const res = await ApiService.post(
             "execution/create-execution",
             checklistData
