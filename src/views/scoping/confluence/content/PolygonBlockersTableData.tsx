@@ -6,7 +6,21 @@ import { scopingBadges } from "../elements/badge";
 export const generatePolygonBlockersTableData = (
   configurations: CityConfigurations
 ): TableData => {
-  const polygonBlockersArray = configurations.polygonpermission ?? [""];
+  const polygonBlockersString = configurations.polygon_blockers ?? "[]";
+  let polygonBlockersArray: any[] = [];
+
+  try {
+    polygonBlockersArray = JSON.parse(polygonBlockersString);
+  } catch (error) {
+    console.error("Failed to parse polygon_blockers JSON:", error);
+  }
+
+  const rows = polygonBlockersArray.map((blocker: any) => [
+    blocker.ORIGIN_POLYGON_LABEL || "",
+    blocker.DEST_POLYGON_LABELS || "",
+    "",
+  ]);
+
   return {
     headline: `Polygon Blockers ${
       scopingBadges.acsa +
@@ -15,11 +29,7 @@ export const generatePolygonBlockersTableData = (
       " " +
       scopingBadges.mandatory
     }`,
-    headers: [`PU`, "DO", "Service tag"],
-    rows: polygonBlockersArray.map((blocker: any) => [
-      blocker.origin || "",
-      blocker.destination || "",
-      blocker.serviceTag || "",
-    ]),
+    headers: ["PU", "DO", "tags"],
+    rows: rows.map((row: any) => row.map((cell: any) => `${cell} `)),
   };
 };

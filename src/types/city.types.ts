@@ -98,4 +98,5 @@ export interface CityConfigurations {
   enable_driver_breaks_control?: string;
   service_hours_for_prescheduling_departure_time_selection?: any;
   finalize_methods?: string;
+  polygon_blockers?: any;
 }

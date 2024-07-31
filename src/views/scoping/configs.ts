@@ -77,4 +77,5 @@ export const scopingConfigs = [
   "commitment_type",
   "finalize_methods",
   "ras_only_concession",
+  "polygon_blockers",
 ];
