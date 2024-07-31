@@ -2,6 +2,7 @@
 import { CityConfigurations } from "@/types/city.types";
 import { TableData } from "../PageBuilder";
 import { scopingBadges } from "../elements/badge";
+import { isArray } from "lodash";
 
 const dayMap: { [key: string]: string } = {
   "0": "Monday",
@@ -14,6 +15,9 @@ const dayMap: { [key: string]: string } = {
 };
 
 const formatServiceHours = (hours: any) => {
+  if (!hours || hours.length === 0 || isArray(hours) === false) {
+    return "Closed";
+  }
   return hours
     .map((slot: any) => {
       if (slot.open === "00.00" && slot.close === "00.00") {

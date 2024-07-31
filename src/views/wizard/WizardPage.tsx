@@ -127,7 +127,7 @@ const WizardPage: React.FC = () => {
         }
       },
       delay: 0,
-      required: true,
+      required: false,
     },
     {
       key: "step2",
