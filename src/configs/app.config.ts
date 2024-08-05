@@ -16,7 +16,14 @@ const devApiBaseUrl =
 const prodApiBaseUrl =
   import.meta.env.VITE_APP_PROD_BASE_URL || process.env.VITE_APP_PROD_BASE_URL;
 
+const VIA_EXPLORER_API =
+  env === "DEV"
+    ? "http://localhost:3001/api/v1"
+    : import.meta.env.VITE_APP_VIA_EXPLORER_API ||
+      process.env.VITE_APP_VIA_EXPLORER_API;
+
 const appConfig = {
+  env: env,
   apiPrefix: "/api",
   baseUrl: env === "DEV" ? devBaseUrl : prodBaseUrl,
   apiBaseUrl: env === "DEV" ? devApiBaseUrl : prodApiBaseUrl,
@@ -24,6 +31,7 @@ const appConfig = {
   authenticatedEntryPath: "/",
   unAuthenticatedEntryPath: "/auth/login",
   timeToVerifyAuthInMIn: 60,
+  viaExplorerApi: VIA_EXPLORER_API,
 };
 
 export default appConfig;

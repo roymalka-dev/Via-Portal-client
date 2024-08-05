@@ -4,18 +4,13 @@ import * as yup from "yup";
 import { csvConfigsInterpreter } from "./csvConfigsInterpreter";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import ApiService from "@/services/ApiService";
-import { PageBuilder } from "./confluence/PageBuilder";
 import { convertCityData } from "./convertCityData";
 import useModal from "@/hooks/useModal";
 import { CustomModal } from "@/components/common/modal/CustomModal";
 import { scopingConfigs } from "./configs";
 
-const NODE_ENV = import.meta.env.VITE_APP_ENV || process.env.VITE_APP_ENV;
-const VIA_EXPLORER_API =
-  NODE_ENV === "DEV"
-    ? "http://localhost:3001/api/v1"
-    : import.meta.env.VITE_APP_VIA_EXPLORER_API ||
-      process.env.VITE_APP_VIA_EXPLORER_API;
+import { generateFromTemplate } from "./confluence/generateFromTemplate";
+import appConfig from "@/configs/app.config";
 
 const tabs: ITab[] = [
   {
@@ -42,18 +37,7 @@ const tabs: ITab[] = [
           .min(new Date(), "Date must be in the future")
           .required("Date field is required"),
       },
-      {
-        label: "City confluence overview",
-        name: "city_overview_link",
-        type: "text",
-        validations: yup.string().url(),
-      },
-      {
-        label: "Jira ticket",
-        name: "jira_ticket",
-        type: "text",
-        validations: yup.string().url(),
-      },
+
       {
         label: "City configurations file",
         name: "city_configurations",
@@ -67,17 +51,24 @@ const tabs: ITab[] = [
         },
       },
       {
+        label: "Confluence Template Page Id",
+        name: "templatePageId",
+        type: "text",
+        initialValues: appConfig.env === "DEV" ? "8192175" : "3393258140",
+        validations: yup.string().required(),
+      },
+      {
         label: "Confluence Parent Page Id",
         name: "parentPageId",
         type: "text",
-        initialValues: NODE_ENV === "DEV" ? "622595" : "2631565668",
+        initialValues: appConfig.env === "DEV" ? "622595" : "2631565668",
         validations: yup.string().required(),
       },
       {
         label: "Confluence Space Key",
         name: "spaceKey",
         type: "text",
-        initialValues: NODE_ENV === "DEV" ? "SD" : "PLAT",
+        initialValues: appConfig.env === "DEV" ? "SD" : "PLAT",
         validations: yup.string().required(),
       },
     ],
@@ -97,28 +88,24 @@ const ScopingPage = () => {
       );
       modal.openModal();
       const cityData = await ApiService.get(
-        `${VIA_EXPLORER_API}/public/get-city-data/${values.city_id}`
+        `${appConfig.viaExplorerApi}/public/get-city-data/${values.city_id}`
       );
       const convertedCityData = convertCityData(cityData);
       const fileData = values.city_configurations;
 
-      const content = await PageBuilder({
-        ...convertedCityData,
-        ...(fileData as any),
-        ...values,
-      });
-      const page = {
-        type: "page",
-        title: `${String(
-          convertedCityData.city_short_code
-        ).toUpperCase()} 2.0 upgrade city scoping`,
-        parentPageId: values.parentPageId,
-        spaceKey: values.spaceKey,
-        content: content,
-      };
+      const content = generateFromTemplate(
+        values.templatePageId as string,
+        `${
+          convertedCityData.city_short_code as string
+        } 2.0 upgrade city scoping`,
+        values.parentPageId as string,
+        values.spaceKey as string,
+        { ...convertedCityData, ...(fileData as any), ...values }
+      );
+
       const response = await ApiService.post(
-        "scoping/create-confluence-page",
-        page
+        "scoping/create-confluence-from-template",
+        content
       );
 
       if (response && response._links) {

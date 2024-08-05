@@ -61,7 +61,8 @@ export const generateServiceHoursTableData = (
     [
       `Time after start of service to book "arrive by" rides ${scopingBadges.ps}`,
       configurations.time_after_end_of_service || "",
-    ]
+    ],
+    [`Special dates ${scopingBadges.ps}`, ""]
   );
 
   return {

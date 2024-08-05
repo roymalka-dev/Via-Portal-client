@@ -50,6 +50,7 @@ export const generateServiceOverviewTableData = (
             scopingBadges.generatedWithTool
           : "",
       ],
+      [`V4B ${scopingBadges.ps} + ${scopingBadges.mandatory}`, ""],
 
       [
         `Welcome Email ${scopingBadges.upgradeTeam} ${scopingBadges.mandatory}`,

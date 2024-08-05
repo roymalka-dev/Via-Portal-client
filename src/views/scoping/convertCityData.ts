@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const convertCityData = (response: any) => {
   return {
-    city_short_code: response.data.env || "",
+    city_short_code: String(response.data.env).toUpperCase() || "",
     service_type: response.data.service_type || "",
     tenant_id: response.data.tenant || "",
     region: response.data.region || "",
