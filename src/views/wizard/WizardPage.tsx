@@ -104,8 +104,6 @@ const WizardPage: React.FC = () => {
       key: "step1",
       description: "Trigger Jenkins City Check Job",
       action: async () => {
-        return true;
-
         try {
           const { city_id } = values;
           const configs = scopingConfigs;
@@ -230,7 +228,6 @@ const WizardPage: React.FC = () => {
       description: "Create checklist execution",
 
       action: async () => {
-        return true;
         const configs = await csvConfigsInterpreter(CSVConfigsFile);
         const checklistName = `${cityData.data.env.toUpperCase()} ${
           cityData.data.id
