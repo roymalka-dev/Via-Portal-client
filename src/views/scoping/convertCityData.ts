@@ -2,6 +2,7 @@
 export const convertCityData = (response: any) => {
   return {
     city_short_code: String(response.data.env).toUpperCase() || "",
+    operation_type: response.data.operationType || "",
     service_type: response.data.service_type || "",
     tenant_id: response.data.tenant || "",
     region: response.data.region || "",
