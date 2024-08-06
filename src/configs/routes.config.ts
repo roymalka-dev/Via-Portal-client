@@ -46,6 +46,10 @@ const ScopingCreatePage = React.lazy(
   () => import("@/views/scoping/ScopingPage")
 );
 
+const TestExecutionPage = React.lazy(
+  () => import("@/views/testExecution/TestExecutionPage")
+);
+
 const WizardPage = React.lazy(() => import("@/views/wizard/WizardPage"));
 
 const ControlPanel = React.lazy(
@@ -147,6 +151,14 @@ export const routes: routeType[] = [
         path: "/scoping/create",
         key: "scoping",
         component: ScopingCreatePage,
+        protect: true,
+        authority: "user",
+        loader: PageLoader,
+      },
+      {
+        path: "/test-execution/create",
+        key: "test-execution",
+        component: TestExecutionPage,
         protect: true,
         authority: "user",
         loader: PageLoader,

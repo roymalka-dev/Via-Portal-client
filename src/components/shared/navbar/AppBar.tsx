@@ -1,10 +1,13 @@
-import { Box, styled, useTheme } from "@mui/material";
+import React from "react";
+import { Box, IconButton, styled, useTheme } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
+import MenuIcon from "@mui/icons-material/Menu";
 import { drawerWidth } from "./navbar.styles";
 
 interface IAppBarProps extends MuiAppBarProps {
   open?: boolean;
+  handleDrawerToggle?: () => void;
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -27,13 +30,17 @@ const AppBar = styled(MuiAppBar, {
 
 type ControlPanelAppBarProps = {
   open: boolean;
+  handleDrawerToggle: () => void;
 };
 
 /**
  * ControlPanelAppBar component for the Control Panel.
- * Renders the app bar with Via logo, theme selector, and language selector.
+ * Renders the app bar with a menu icon for mobile, theme selector, and language selector.
  */
-const ControlPanelAppBar: React.FC<ControlPanelAppBarProps> = ({ open }) => {
+const ControlPanelAppBar: React.FC<ControlPanelAppBarProps> = ({
+  open,
+  handleDrawerToggle,
+}) => {
   const theme = useTheme();
 
   return (
@@ -44,6 +51,17 @@ const ControlPanelAppBar: React.FC<ControlPanelAppBarProps> = ({ open }) => {
       sx={{ backgroundColor: theme.palette.background.paper }}
     >
       <Toolbar>
+        {open && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ marginRight: 2, ...(open && { display: "none" }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
         <Box
           sx={{
             position: "absolute",

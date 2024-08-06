@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import MenuIcon from "@mui/icons-material/Menu";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -126,24 +125,11 @@ const ControlPanelDrawer: React.FC = () => {
       </ListItemButton>
       <Collapse in={accordionState[item.name]} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {item.children?.map((child) => (
-            <ListItemButton
-              key={child.name}
-              sx={{ pl: 4 }}
-              selected={location.pathname === child.path}
-              onClick={() => {
-                navigate(child.path);
-                if (isMobile) {
-                  setOpen(false);
-                }
-              }}
-            >
-              <ListItemIcon>
-                <child.icon />
-              </ListItemIcon>
-              <ListItemText primary={child.name} />
-            </ListItemButton>
-          ))}
+          {item.children?.map((child) =>
+            child.children
+              ? renderAccordionNavItem(child)
+              : renderNavItem(child)
+          )}
         </List>
       </Collapse>
     </Box>
@@ -151,17 +137,6 @@ const ControlPanelDrawer: React.FC = () => {
 
   return (
     <Box sx={{ display: "flex" }}>
-      {isMobile && (
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          sx={{ mr: 2 }}
-        >
-          <MenuIcon />
-        </IconButton>
-      )}
       <Drawer
         variant={isMobile ? "temporary" : "permanent"}
         open={open}
