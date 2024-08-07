@@ -4,27 +4,18 @@ import { IRule } from "@/types/data.types/rule.types";
 import { Box, Typography } from "@mui/material";
 import { travelLogicformTabs } from "../form/form.tabs";
 import { generateTestPlanXLSX } from "../utils/generateTestPlanXLSX";
-import { useNavigate } from "react-router-dom";
 
 const TravelLogicCreatePage = () => {
-  const navigate = useNavigate();
   const submitRequest = async (request: RequestType) => {
     // Extract the necessary data from the form submission
     const rules = request.rules as IRule[];
     const polygons = request.polygons as string[];
     const tags = request.tags as string[];
 
-    // Ensure types are correct before calling the generate function
     if (Array.isArray(rules) && Array.isArray(polygons)) {
-      // Generate the XLSX file
       generateTestPlanXLSX(rules, polygons, tags);
-
-      const filePath = ""; //get file path from server
-
-      //goto the repository page
-      navigate(`/travel-logic/repository?p=${filePath}`);
     } else {
-      console.error("Invalid form data:", { rules, polygons, tags });
+      console.log("Invalid form data:", { rules, polygons, tags });
       alert("Invalid form data. Please try again.");
     }
   };

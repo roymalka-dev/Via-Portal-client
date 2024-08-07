@@ -32,8 +32,15 @@ export const generateServiceHoursTableData = (
   configurations: CityConfigurations
 ): TableData => {
   let serviceHours =
-    configurations.service_hours_for_prescheduling_departure_time_selection ||
-    {};
+    configurations.service_hours_for_prescheduling_departure_time_selection || {
+      "0": [""],
+      "1": [""],
+      "2": [""],
+      "3": [""],
+      "4": [""],
+      "5": [""],
+      "6": [""],
+    };
 
   // If serviceHours is a string, parse it to an object
   if (typeof serviceHours === "string") {

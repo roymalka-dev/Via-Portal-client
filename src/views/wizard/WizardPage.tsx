@@ -276,6 +276,18 @@ const WizardPage: React.FC = () => {
       delay: 0,
       required: false,
     },
+    {
+      key: "step7",
+      description: "buy masked numbers from planX",
+      action: async () => {
+        handleSuccess(
+          "Buy masked numbers from planX is a placeholder and not implemented."
+        );
+        return false;
+      },
+      delay: 0,
+      required: false,
+    },
   ];
 
   return (
