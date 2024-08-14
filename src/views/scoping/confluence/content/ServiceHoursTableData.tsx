@@ -48,7 +48,15 @@ export const generateServiceHoursTableData = (
       serviceHours = JSON.parse(serviceHours);
     } catch (error) {
       console.error("Failed to parse service hours JSON:", error);
-      serviceHours = {};
+      serviceHours = {
+        "0": [""],
+        "1": [""],
+        "2": [""],
+        "3": [""],
+        "4": [""],
+        "5": [""],
+        "6": [""],
+      };
     }
   }
 
