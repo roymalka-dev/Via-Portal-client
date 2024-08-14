@@ -18,7 +18,7 @@ export const generateFromTemplate = (
     polygon_blockers_table: ScopingTableBuilder(
       generatePolygonBlockersTableData(configurations)
     ),
-    service_overview_table: ScopingTableBuilder(
+    service_hours_table: ScopingTableBuilder(
       generateServiceHoursTableData(configurations)
     ),
     payment_methods_table: ScopingTableBuilder(
